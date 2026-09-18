@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generar combinaciones — Prueba con JSON real</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card-bg: #151b26;
+    --text: #e6e9ef;
+    --text-dim: #8b93a7;
+    --sphere-off: #232a38;
+    --sphere-off-hover: #2c3444;
+    --gold: #f2b93d;
+    --gold-glow: rgba(242, 185, 61, 0.55);
+    --blue: #4a7dff;
+    --blue-glow: rgba(74, 125, 255, 0.5);
+    --disabled-op: 0.35;
+    --border: #232a38;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 28px;
+    width: 100%;
+    max-width: 620px;
+    border: 1px solid var(--border);
+  }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  .subtitle { color: var(--text-dim); font-size: 14px; margin: 0 0 22px; }
+  .status {
+    font-size: 13px;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #0f141c;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .status.ok { color: #7fe0a0; }
+  .status.error { color: #ff8080; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .sphere {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    background: var(--sphere-off);
+    color: var(--text);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .sphere:hover:not(.disabled) { background: var(--sphere-off-hover); transform: scale(1.05); }
+  .sphere.reco-only { background: var(--sphere-off); border-color: var(--gold); color: var(--gold); }
+  .sphere.reco-selected {
+    background: radial-gradient(circle at 35% 30%, #ffd873, var(--gold));
+    color: #241a02; border-color: var(--gold); box-shadow: 0 0 16px var(--gold-glow);
+  }
+  .sphere.manual-selected {
+    background: radial-gradient(circle at 35% 30%, #8fb0ff, var(--blue));
+    color: #061229; border-color: var(--blue); box-shadow: 0 0 16px var(--blue-glow);
+  }
+  .sphere.disabled { opacity: var(--disabled-op); cursor: not-allowed; }
+  .selected-box {
+    background: #0f141c; border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; font-size: 14px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+  }
+  .selected-box b { color: #fff; }
+  .selected-box .count.full { color: var(--gold); }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid transparent; }
+  .legend-dot.off { background: var(--sphere-off); }
+  .legend-dot.reco { background: var(--sphere-off); border-color: var(--gold); }
+  .legend-dot.reco-sel { background: var(--gold); }
+  .legend-dot.manual { background: var(--blue); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    font-family: inherit; font-size: 13px; font-weight: 600; padding: 10px 16px;
+    border-radius: 8px; border: 1px solid var(--border); background: #1c2430;
+    color: var(--text); cursor: pointer; transition: background 0.15s ease;
+  }
+  button:hover { background: #263043; }
+  button.primary { background: var(--gold); color: #241a02; border-color: var(--gold); }
+  button.primary:hover { background: #ffcb5c; }
+  button#btnWhatsApp { background: #1f7a3f; color: #eafff0; border-color: #1f7a3f; }
+  button#btnWhatsApp:hover { background: #24913c; }
+  button#btnWhatsApp.disabled { opacity: var(--disabled-op); cursor: not-allowed; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Generar combinaciones</h1>
+  <p class="subtitle">Números recomendados según pares confirmados y atraso individual.</p>
+
+  <div class="status" id="status">Cargando recomendados.json…</div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="selected-box">
+    <span>Seleccionados (<b id="count">0</b>/<span id="limit">12</span>): <span id="list">—</span></span>
+    <span class="count" id="countTag"></span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot off"></span> Sin destacar</div>
+    <div class="legend-item"><span class="legend-dot reco"></span> Recomendado (no elegido)</div>
+    <div class="legend-item"><span class="legend-dot reco-sel"></span> Recomendado + elegido</div>
+    <div class="legend-item"><span class="legend-dot manual"></span> Elegido manualmente</div>
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="btnUseReco">Usar recomendados</button>
+    <button id="btnClear">Limpiar selección</button>
+    <button id="btnWhatsApp">📱 Compartir por WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  // Ajusta esto por lotería: Chispazo = 28, Fantasy5 = 36
+  const TOTAL_NUMEROS = 28;
+  const LIMITE = 12;
+  const JSON_URL = 'recomendados.json'; // misma carpeta que este HTML
+
+  let RECOMENDADOS = new Set();
+  let seleccionados = new Set();
+
+  const grid = document.getElementById('grid');
+  const countEl = document.getElementById('count');
+  const listEl = document.getElementById('list');
+  const countTag = document.getElementById('countTag');
+  const statusEl = document.getElementById('status');
+
+  function crearEsferas() {
+    grid.innerHTML = '';
+    for (let n = 1; n <= TOTAL_NUMEROS; n++) {
+      const el = document.createElement('div');
+      el.className = 'sphere';
+      el.dataset.num = n;
+      el.textContent = String(n).padStart(2, '0');
+      el.addEventListener('click', () => toggle(n));
+      grid.appendChild(el);
+    }
+  }
+
+  function toggle(n) {
+    const yaSeleccionado = seleccionados.has(n);
+    if (!yaSeleccionado && seleccionados.size >= LIMITE) return;
+    if (yaSeleccionado) seleccionados.delete(n);
+    else seleccionados.add(n);
+    render();
+  }
+
+  function render() {
+    const enLimite = seleccionados.size >= LIMITE;
+
+    grid.querySelectorAll('.sphere').forEach(el => {
+      const n = Number(el.dataset.num);
+      const esReco = RECOMENDADOS.has(n);
+      const esSel = seleccionados.has(n);
+
+      el.classList.remove('reco-only', 'reco-selected', 'manual-selected', 'disabled');
+
+      if (esSel && esReco) el.classList.add('reco-selected');
+      else if (esSel && !esReco) el.classList.add('manual-selected');
+      else if (!esSel && esReco) el.classList.add('reco-only');
+
+      if (!esSel && enLimite) el.classList.add('disabled');
+    });
+
+    const ordenados = [...seleccionados].sort((a, b) => a - b);
+    countEl.textContent = seleccionados.size;
+    listEl.textContent = ordenados.length ? ordenados.map(n => String(n).padStart(2, '0')).join(', ') : '—';
+    countTag.textContent = enLimite ? '● Límite alcanzado' : '';
+    countTag.className = 'count' + (enLimite ? ' full' : '');
+
+    const btnWa = document.getElementById('btnWhatsApp');
+    btnWa.classList.toggle('disabled', seleccionados.size === 0);
+  }
+
+  document.getElementById('btnUseReco').addEventListener('click', () => {
+    seleccionados = new Set(RECOMENDADOS);
+    render();
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    seleccionados = new Set();
+    render();
+  });
+
+  // Nombre del sitio y URL para el mensaje (ajusta NOMBRE_SITIO/URL_SITIO por lotería al integrar en Java)
+  const NOMBRE_SITIO = 'Chispazo Hoy';
+  const URL_SITIO = 'https://resultadoschispazohoy.com';
+
+  document.getElementById('btnWhatsApp').addEventListener('click', () => {
+    if (seleccionados.size === 0) return;
+    const numeros = [...seleccionados].sort((a, b) => a - b).map(n => String(n).padStart(2, '0')).join(', ');
+    const mensaje = `Mi selección de números en ${NOMBRE_SITIO}: ${numeros}\n${URL_SITIO}`;
+    const url = 'https://wa.me/?text=' + encodeURIComponent(mensaje);
+    window.open(url, '_blank');
+  });
+
+  async function cargarRecomendados() {
+    try {
+      const resp = await fetch(JSON_URL, { cache: 'no-store' });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const data = await resp.json();
+
+      if (!Array.isArray(data.recomendados)) throw new Error('El JSON no trae "recomendados" como arreglo');
+
+      RECOMENDADOS = new Set(data.recomendados);
+      seleccionados = new Set(RECOMENDADOS);
+
+      statusEl.textContent = '✔ recomendados.json cargado — ' + data.recomendados.length + ' números'
+        + (data.generado ? ' (generado: ' + data.generado + ')' : '');
+      statusEl.className = 'status ok';
+    } catch (err) {
+      statusEl.textContent = '✘ Error al cargar recomendados.json: ' + err.message
+        + ' — revisa que el archivo esté en la misma carpeta y que el servidor local esté sirviendo desde ahí.';
+      statusEl.className = 'status error';
+    } finally {
+      crearEsferas();
+      render();
+    }
+  }
+
+  cargarRecomendados();
+</script>
+
+</body>
+</html>
