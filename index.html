@@ -166,31 +166,6 @@ function toggleUltimosResultados() {
   <aside class="aside-right">
   </aside>
 </main>
-<script>
-(function () {
-  function inyectarConScripts(contenedor, htmlAnuncio) {
-    contenedor.innerHTML = htmlAnuncio;
-    contenedor.querySelectorAll('script').forEach(function (viejo) {
-      var nuevo = document.createElement('script');
-      for (var i = 0; i < viejo.attributes.length; i++) {
-        nuevo.setAttribute(viejo.attributes[i].name, viejo.attributes[i].value);
-      }
-      nuevo.text = viejo.textContent;
-      viejo.parentNode.replaceChild(nuevo, viejo);
-    });
-  }
-  function intentarMostrarAsideDerecho() {
-    var contenedor = document.querySelector('.aside-right');
-    if (!contenedor || contenedor.dataset.adCargado === '1') return;
-    if (window.matchMedia('(min-width: 992px)').matches) {
-      contenedor.dataset.adCargado = '1';
-      inyectarConScripts(contenedor, '<ins style="width: 160px;height:600px" data-width="160" data-height="600" class="t44785a6438" data-domain="//data527.click" data-affquery="/13526e6c6809799e2ec7/44785a6438/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>');
-    }
-  }
-  intentarMostrarAsideDerecho();
-  window.addEventListener('resize', intentarMostrarAsideDerecho);
-})();
-</script>
 <style>
 .btn-grafica{display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;cursor:pointer;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap;animation:pulso-grafica 2.2s ease-in-out infinite;}
 .btn-grafica:hover{background:#2563eb;color:#fff;border-color:#2563eb;animation:none;}

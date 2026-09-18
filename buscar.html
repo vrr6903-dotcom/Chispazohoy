@@ -56,31 +56,6 @@
   </section>
   <aside class="aside-right"></aside>
 </main>
-<script>
-(function () {
-  function inyectarConScripts(contenedor, htmlAnuncio) {
-    contenedor.innerHTML = htmlAnuncio;
-    contenedor.querySelectorAll('script').forEach(function (viejo) {
-      var nuevo = document.createElement('script');
-      for (var i = 0; i < viejo.attributes.length; i++) {
-        nuevo.setAttribute(viejo.attributes[i].name, viejo.attributes[i].value);
-      }
-      nuevo.text = viejo.textContent;
-      viejo.parentNode.replaceChild(nuevo, viejo);
-    });
-  }
-  function intentarMostrarAsideDerecho() {
-    var contenedor = document.querySelector('.aside-right');
-    if (!contenedor || contenedor.dataset.adCargado === '1') return;
-    if (window.matchMedia('(min-width: 992px)').matches) {
-      contenedor.dataset.adCargado = '1';
-      inyectarConScripts(contenedor, '<ins style="width: 160px;height:600px" data-width="160" data-height="600" class="t44785a6438" data-domain="//data527.click" data-affquery="/13526e6c6809799e2ec7/44785a6438/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>');
-    }
-  }
-  intentarMostrarAsideDerecho();
-  window.addEventListener('resize', intentarMostrarAsideDerecho);
-})();
-</script>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
   <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Lotería Nacional (México).</span>
