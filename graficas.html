@@ -53,7 +53,7 @@
 </main>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
-  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Florida.</span>
+  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Lotería Nacional (México).</span>
 </div>
 <script>
 var historialCacheJSON = null;
@@ -150,9 +150,9 @@ async function buscarGraficaAtraso() {
     }
     return ultimoDelNumero > 0 ? (ultimoConcurso - ultimoDelNumero) : ultimoConcurso;
   });
-  const etiquetas = numeros.map(function(n){ return 'N° ' + n; });
+  const etiquetas = numeros.map(function(n){ return 'N° ' + n + ''; });
   const tipo = numeros.length === 1 ? 'Número' : numeros.length === 2 ? 'Par' : 'Tercia';
-  resumen.innerHTML = tipo + ' ' + numeros.join('-') + ': atraso actual por número';
+  resumen.innerHTML = '' + tipo + ' ' + numeros.join('-') + ': atraso actual por número';
   dibujarGraficaAtraso('Distancia por Número', etiquetas, valores, 'contenidoGraficaAtraso');
 }
 

@@ -47,6 +47,7 @@
   </div>
   <div style="margin-bottom:14px; font-size:0.85rem;">📥 ¿Prefieres verlo en Excel? <a href="historial.csv" download>Descarga el historial completo aquí</a>.</div>
   <div id="resumenBusquedaHistorial" style="margin-bottom:10px; font-weight:600;"></div>
+  <div id="graficaAparicionesBuscar" style="margin-bottom:16px;"></div>
   <table class="tabla-historial">
     <thead><tr><th>Concurso</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th><th>Fecha</th></tr></thead>
     <tbody id="tablaBusquedaHistorialBody"></tbody>
@@ -57,7 +58,7 @@
 </main>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
-  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Florida.</span>
+  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Lotería Nacional (México).</span>
 </div>
 <script>
 var historialCacheJSON = null;
@@ -79,6 +80,7 @@ async function buscarEnHistorial() {
   const resumen = document.getElementById('resumenBusquedaHistorial');
   const tbody = document.getElementById('tablaBusquedaHistorialBody');
   tbody.innerHTML = '';
+  document.getElementById('graficaAparicionesBuscar').innerHTML = '';
   if (numeros.length === 0) {
     resumen.innerHTML = 'Escribe al menos un número.';
     return;
@@ -93,7 +95,7 @@ async function buscarEnHistorial() {
     return numeros.every(function(n){ return s.numeros.indexOf(n) !== -1; });
   });
   const badges = numeros.map(function(n){ return '<span class="badge-numero-verde">' + n + '</span>'; }).join(' ');
-  resumen.innerHTML = 'Se encontraron ' + encontrados.length + ' sorteos con los números: ' + badges;
+  resumen.innerHTML = 'Se encontraron ' + encontrados.length + ' sorteos con: ' + badges + '';
   const LIMITE = 500;
   const paraMostrar = encontrados.slice().reverse().slice(0, LIMITE);
   let filas = '';
@@ -106,15 +108,69 @@ async function buscarEnHistorial() {
   });
   tbody.innerHTML = filas;
   if (encontrados.length > LIMITE) {
-    resumen.innerHTML += ' (mostrando los ' + LIMITE + ' más recientes)';
+    resumen.innerHTML += '(mostrando los ' + LIMITE + ' más recientes)';
   }
+  dibujarAparicionesPorAnio(encontrados, 'graficaAparicionesBuscar');
+}
+
+function dibujarAparicionesPorAnio(sorteos, idContenedor) {
+  const contenedor = document.getElementById(idContenedor);
+  if (!sorteos || sorteos.length === 0) { contenedor.innerHTML = ''; return; }
+  const conteoPorAnio = {};
+  sorteos.forEach(function(s){
+    const partes = (s.fecha || '').split('/');
+    const anio = partes.length === 3 ? partes[2] : 'N/D';
+    conteoPorAnio[anio] = (conteoPorAnio[anio] || 0) + 1;
+  });
+  const anios = Object.keys(conteoPorAnio).sort();
+  const valores = anios.map(function(a){ return conteoPorAnio[a]; });
+  const maxDato = Math.max.apply(null, valores.concat([1]));
+  const n = anios.length;
+  const altoSvg = 220, margenIzq = 36, margenDer = 16, margenInferior = 34, margenSuperior = 20;
+  const altoDisponible = altoSvg - margenInferior - margenSuperior;
+  const anchoBarra = 34, separacion = 22, espacio = anchoBarra + separacion;
+  const anchoSvg = margenIzq + 20 + (n > 0 ? (n - 1) * espacio : 0) + anchoBarra + margenDer + 20;
+  let ejeSvg = '<line x1="' + margenIzq + '" y1="' + margenSuperior + '" x2="' + margenIzq + '" y2="' + (margenSuperior + altoDisponible) + '" stroke="#e2e8f0"></line>';
+  let barrasSvg = '';
+  for (let i = 0; i < n; i++) {
+    const valor = valores[i];
+    const alturaBarra = maxDato > 0 ? (valor / maxDato) * altoDisponible : 0;
+    const x = margenIzq + 10 + i * espacio;
+    const y = margenSuperior + (altoDisponible - alturaBarra);
+    barrasSvg += '<rect x="' + x + '" y="' + y + '" width="' + anchoBarra + '" height="' + alturaBarra + '" rx="4" fill="#3b82f6"></rect>';
+    barrasSvg += '<text x="' + (x + anchoBarra/2) + '" y="' + (y - 6) + '" text-anchor="middle" style="font-size:12px;font-weight:700;fill:#1e293b;">' + valor + '</text>';
+    barrasSvg += '<text x="' + (x + anchoBarra/2) + '" y="' + (altoSvg - margenInferior + 18) + '" text-anchor="middle" style="font-size:12px;fill:#475569;">' + anios[i] + '</text>';
+  }
+  contenedor.innerHTML =
+    '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">' +
+      '<div style="font-size:1rem; font-weight:700; color:#1e293b;">📊 Appearances by year</div>' +
+      '<button type="button" class="btn-limpiar-historial" onclick="cerrarGraficaAparicionesBuscar()">✖ Cerrar</button>' +
+    '</div>' +
+    '<div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; overflow-x:auto;">' +
+      '<svg viewBox="0 0 ' + anchoSvg + ' ' + altoSvg + '" style="width:100%; max-width:' + anchoSvg + 'px; height:auto; display:block;">' + ejeSvg + barrasSvg + '</svg>' +
+    '</div>';
+}
+
+function cerrarGraficaAparicionesBuscar() {
+  document.getElementById('graficaAparicionesBuscar').innerHTML = '';
 }
 
 function limpiarBusquedaHistorial() {
   document.getElementById('inputBuscarNumeros').value = '';
   document.getElementById('resumenBusquedaHistorial').innerHTML = '';
   document.getElementById('tablaBusquedaHistorialBody').innerHTML = '';
+  document.getElementById('graficaAparicionesBuscar').innerHTML = '';
 }
+(function () {
+  try {
+    const pendientes = localStorage.getItem('buscarHistorialNumeros');
+    if (pendientes) {
+      localStorage.removeItem('buscarHistorialNumeros');
+      document.getElementById('inputBuscarNumeros').value = pendientes;
+      buscarEnHistorial();
+    }
+  } catch (e) { /* si localStorage falla, simplemente no se precarga */ }
+})();
 </script>
 </body>
 </html>
