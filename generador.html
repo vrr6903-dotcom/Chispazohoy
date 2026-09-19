@@ -68,6 +68,12 @@
 .gc-btn-reco { background:#f2b93d !important; color:#241a02 !important; border-color:#f2b93d !important; }
 .gc-btn-whatsapp { background:#1f7a3f !important; color:#eafff0 !important; border-color:#1f7a3f !important; }
 .gc-btn-whatsapp.gc-disabled { opacity:0.35; pointer-events:none; }
+.gc-combos-section { margin-top:24px; padding-top:20px; border-top:1px solid #232a38; }
+.gc-combos-titulo { font-size:1rem; color:#e6e9ef; margin:0 0 4px; }
+.gc-combos-subtitulo { font-size:0.82rem; color:#8b93a7; margin:0 0 14px; }
+.gc-combos { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.gc-combo-item { background:#0f141c; border:1px solid #232a38; border-radius:8px; padding:10px 14px; font-size:0.9rem; color:#e6e9ef; display:flex; align-items:center; gap:10px; }
+.gc-combo-item b { color:#f2b93d; min-width:22px; }
 </style>
 <div class="gc-card">
   <p class="gc-subtitulo">Números recomendados según pares confirmados y atraso individual.</p>
@@ -88,6 +94,14 @@
     <button type="button" id="gcBtnClear">Limpiar selección</button>
     <button type="button" class="gc-btn-whatsapp" id="gcBtnWhatsApp">📱 Compartir por WhatsApp</button>
   </div>
+  <div class="gc-combos-section" id="gcCombosSection" style="display:none;">
+    <h3 class="gc-combos-titulo">[[generador.combinaciones.titulo]]</h3>
+    <p class="gc-combos-subtitulo">[[generador.combinaciones.subtitulo]]</p>
+    <div class="gc-combos" id="gcCombos"></div>
+    <div class="gc-actions">
+      <button type="button" class="gc-btn-whatsapp" id="gcBtnWhatsAppCombos">[[generador.boton.whatsappCombinaciones]]</button>
+    </div>
+  </div>
 </div>
   </section>
   <aside class="aside-right"></aside>
@@ -102,15 +116,19 @@
   var LIMITE_GEN = 12;
   var JSON_URL_GEN = 'recomendados.json';
   var ETIQUETA_WHATSAPP = 'Mi selección de números en Chispazo';
+  var ETIQUETA_WHATSAPP_COMBOS = '[[generador.whatsapp.mensajeCombinaciones]]';
   var URL_SITIO_GEN = 'https://resultadoschispazohoy.com';
   var RECOMENDADOS_GEN = new Set();
   var seleccionadosGen = new Set();
+  var COMBINACIONES_GEN = [];
 
   var grid = document.getElementById('gcGrid');
   var countEl = document.getElementById('gcCount');
   var listEl = document.getElementById('gcLista');
   var limiteTag = document.getElementById('gcLimiteTag');
   var statusError = document.getElementById('gcStatusError');
+  var comboSection = document.getElementById('gcCombosSection');
+  var comboList = document.getElementById('gcCombos');
   document.getElementById('gcLimite').textContent = LIMITE_GEN;
 
   function crearEsferasGen() {
@@ -174,6 +192,35 @@
     window.open('https://wa.me/?text=' + encodeURIComponent(mensaje), '_blank');
   });
 
+  function renderCombinaciones() {
+    if (!COMBINACIONES_GEN.length) {
+      comboSection.style.display = 'none';
+      return;
+    }
+    comboSection.style.display = 'block';
+    comboList.innerHTML = '';
+    COMBINACIONES_GEN.forEach(function(combo, i){
+      var item = document.createElement('div');
+      item.className = 'gc-combo-item';
+      var numerosTxt = combo.map(function(n){ return n < 10 ? ('0'+n) : String(n); }).join(' - ');
+      var etiqueta = document.createElement('b');
+      etiqueta.textContent = (i + 1) + '.';
+      item.appendChild(etiqueta);
+      item.appendChild(document.createTextNode(numerosTxt));
+      comboList.appendChild(item);
+    });
+  }
+
+  document.getElementById('gcBtnWhatsAppCombos').addEventListener('click', function(){
+    if (!COMBINACIONES_GEN.length) return;
+    var texto = COMBINACIONES_GEN.map(function(combo, i){
+      var numerosTxt = combo.map(function(n){ return n < 10 ? ('0'+n) : String(n); }).join('-');
+      return (i + 1) + '. ' + numerosTxt;
+    }).join('\n');
+    var mensaje = ETIQUETA_WHATSAPP_COMBOS + ':\n' + texto + (URL_SITIO_GEN ? ('\n' + URL_SITIO_GEN) : '');
+    window.open('https://wa.me/?text=' + encodeURIComponent(mensaje), '_blank');
+  });
+
   fetch(JSON_URL_GEN, { cache: 'no-store' }).then(function(resp){
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     return resp.json();
@@ -181,12 +228,16 @@
     if (!Array.isArray(data.recomendados)) throw new Error('formato invalido');
     RECOMENDADOS_GEN = new Set(data.recomendados);
     seleccionadosGen = new Set(RECOMENDADOS_GEN);
+    if (Array.isArray(data.combinaciones)) {
+      COMBINACIONES_GEN = data.combinaciones;
+    }
   }).catch(function(err){
     statusError.style.display = 'block';
     console.error('No se pudo cargar recomendados.json', err);
   }).finally(function(){
     crearEsferasGen();
     renderGen();
+    renderCombinaciones();
   });
 })();
 </script>
