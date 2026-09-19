@@ -121,6 +121,7 @@
   var RECOMENDADOS_GEN = new Set();
   var seleccionadosGen = new Set();
   var COMBINACIONES_GEN = [];
+  var TOTAL_COMBINACIONES_GEN = 10;
 
   var grid = document.getElementById('gcGrid');
   var countEl = document.getElementById('gcCount');
@@ -172,6 +173,7 @@
     limiteTag.textContent = enLimite ? '● Límite alcanzado' : '';
     var btnWa = document.getElementById('gcBtnWhatsApp');
     btnWa.classList.toggle('gc-disabled', seleccionadosGen.size === 0);
+    actualizarCombinaciones();
   }
 
   document.getElementById('gcBtnUseReco').addEventListener('click', function(){
@@ -191,6 +193,58 @@
     var mensaje = ETIQUETA_WHATSAPP + ': ' + numerosStr + (URL_SITIO_GEN ? ('\n' + URL_SITIO_GEN) : '');
     window.open('https://wa.me/?text=' + encodeURIComponent(mensaje), '_blank');
   });
+
+  // Puerto en JS del mismo heurístico de GeneradorReduccion.java (máxima
+  // cobertura de pares), para recalcular las combinaciones en el navegador
+  // cada vez que el usuario cambia su selección (recomendados y/o manuales).
+  function generarCombinacionesJS(numeros, totalCombinaciones) {
+    if (numeros.length < 5) return [];
+    var candidatas = [];
+    (function combinar(inicio, actual) {
+      if (actual.length === 5) { candidatas.push(actual.slice()); return; }
+      for (var i = inicio; i < numeros.length; i++) {
+        actual.push(numeros[i]);
+        combinar(i + 1, actual);
+        actual.pop();
+      }
+    })(0, []);
+
+    function claveParDe(a, b) { return Math.min(a, b) + '-' + Math.max(a, b); }
+
+    var paresCubiertos = {};
+    var seleccionadas = [];
+
+    for (var paso = 0; paso < totalCombinaciones && candidatas.length; paso++) {
+      var mejor = null, mejorIdx = -1, mejorCobertura = -1;
+      for (var c = 0; c < candidatas.length; c++) {
+        var combo = candidatas[c];
+        var nuevos = 0;
+        for (var i = 0; i < combo.length; i++) {
+          for (var j = i + 1; j < combo.length; j++) {
+            if (!paresCubiertos[claveParDe(combo[i], combo[j])]) nuevos++;
+          }
+        }
+        if (nuevos > mejorCobertura) { mejorCobertura = nuevos; mejor = combo; mejorIdx = c; }
+      }
+      if (!mejor || mejorCobertura === 0) break;
+      for (var i = 0; i < mejor.length; i++) {
+        for (var j = i + 1; j < mejor.length; j++) {
+          paresCubiertos[claveParDe(mejor[i], mejor[j])] = true;
+        }
+      }
+      seleccionadas.push(mejor.slice().sort(function(a, b){ return a - b; }));
+      candidatas.splice(mejorIdx, 1);
+    }
+    return seleccionadas;
+  }
+
+  function actualizarCombinaciones() {
+    var numerosArray = Array.from(seleccionadosGen);
+    COMBINACIONES_GEN = numerosArray.length >= 5
+      ? generarCombinacionesJS(numerosArray, TOTAL_COMBINACIONES_GEN)
+      : [];
+    renderCombinaciones();
+  }
 
   function renderCombinaciones() {
     if (!COMBINACIONES_GEN.length) {
@@ -237,7 +291,6 @@
   }).finally(function(){
     crearEsferasGen();
     renderGen();
-    renderCombinaciones();
   });
 })();
 </script>
