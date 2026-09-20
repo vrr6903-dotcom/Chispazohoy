@@ -18,7 +18,7 @@ REM NOTA DIAGNOSTICO: revisa el archivo de log despues de cada corrida,
 REM ahi quedan los mensajes de error (incluyendo los de subida a Git).
 REM ============================================================
 REM --- Rutas de Chispazo ---
-set RUTA_SCRIPT=C:\grafica01\scraper_chispazo.py
+set RUTA_SCRIPT=C:\Loterias\chispazo\español\scraper_chispazo.py
 set RUTA_JAR=C:\Users\victor\Documents\NetBeansProjects\Chispazo\dist\Chispazo.jar
 set RUTA_LOG=C:\grafica01\log_chispazo.txt
 set NOMBRE_CLASE_CRUCE=CruceUnosPares
