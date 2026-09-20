@@ -248,7 +248,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b class="clickable-num" onclick="filtrarPorNumero(\''+numStr+'\')" title="Filtrar por el número \' + numStr + \'">'+numStr+'</b></td>'
         + '<td>'+u.totales+'</td><td>'+u.fecha+'</td><td>'+u.concurso+'</td>'
         + '<td class="distancia-bold">'+u.distancia+'</td>'
-        + '<td><button class="btn-grafica" title="Search number \' + numStr + \' across the whole history" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+numStr+'\')">🔍 Buscar</button></td>'
+        + '<td><button class="btn-grafica" title="Buscar el número \' + numStr + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+numStr+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;
@@ -265,7 +265,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b>'+p1+'</b></td><td><b>'+p2+'</b></td>'
         + '<td>'+p.posicion1+'</td><td>'+p.posicion2+'</td><td>'+p.concurso+'</td><td>'+p.fecha+'</td><td>'+p.total+'</td>'
         + '<td class="distancia-bold">'+p.distancia+'</td>'
-        + '<td><button class="btn-grafica" title="Search pair \' + p1 + \' and \' + p2 + \' across the whole history" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+p1+','+p2+'\')">🔍 Buscar</button></td>'
+        + '<td><button class="btn-grafica" title="Buscar el par \' + p1 + \' y \' + p2 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+p1+','+p2+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;
@@ -283,7 +283,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b>'+n1+'</b></td><td><b>'+n2+'</b></td><td><b>'+n3+'</b></td>'
         + '<td>'+t.posicion1+'</td><td>'+t.posicion2+'</td><td>'+t.posicion3+'</td><td>'+t.total+'</td><td>'+t.fecha+'</td><td>'+t.concurso+'</td>'
         + '<td class="distancia-bold">'+t.distancia+'</td>'
-        + '<td><button class="btn-grafica" title="Search trio \' + n1 + \', \' + n2 + \' and \' + n3 + \' across the whole history" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\')">🔍 Buscar</button></td>'
+        + '<td><button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;
