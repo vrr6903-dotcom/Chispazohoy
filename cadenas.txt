@@ -1,0 +1,2 @@
+buscar.aparicionesPorAnio.titulo=📊 Apariciones por año
+buscar.aparicionesPorAnio.cerrar=✖ Cerrar
