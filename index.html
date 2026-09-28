@@ -133,6 +133,7 @@ function toggleUltimosResultados() {
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
+  <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
 <div id="tab-numeros">
     <div class="stats-card">
@@ -188,6 +189,8 @@ function toggleUltimosResultados() {
 .btn-grafica{display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;cursor:pointer;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap;animation:pulso-grafica 2.2s ease-in-out infinite;}
 .btn-grafica:hover{background:#2563eb;color:#fff;border-color:#2563eb;animation:none;}
 @keyframes pulso-grafica{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,0.25);}50%{box-shadow:0 0 0 5px rgba(37,99,235,0);}}
+.btn-seguir{animation:none !important;background:#fffbeb;border-color:#fcd34d;color:#b45309;margin-right:4px;}
+.btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
 </style>
 <script>
 function buscarSeleccionHistorial(numerosCsv){
@@ -195,6 +198,26 @@ function buscarSeleccionHistorial(numerosCsv){
     localStorage.setItem('buscarHistorialNumeros', numerosCsv.split(',').join(' '));
   } catch (e) { /* si falla localStorage, igual se redirige */ }
   window.location.href = 'buscar.html';
+}
+var SEGUIMIENTO_MAX = 15;
+var TSEG = (document.documentElement.lang === 'en')
+  ? { guardar:'⭐ Save', tip:'Save to My tracking', guardado:'✓ Saved', yaEsta:'Already in your tracking', lleno:'You can track up to ' + SEGUIMIENTO_MAX + '. Delete one in the Tracking tab first.', error:'Could not save. Please try again.' }
+  : { guardar:'⭐ Guardar', tip:'Guardar en Mi seguimiento', guardado:'✓ Guardado', yaEsta:'Ya está en tu seguimiento', lleno:'Puedes seguir hasta ' + SEGUIMIENTO_MAX + '. Borra una en la pestaña Seguimiento primero.', error:'No se pudo guardar. Intenta de nuevo.' };
+async function seguirCombinacion(tipo, csv, btn){
+  var original = btn.textContent;
+  function aviso(txt){ btn.textContent = txt; setTimeout(function(){ btn.textContent = original; }, 1800); }
+  var nums = csv.split(',').map(Number);
+  var lista = [];
+  try { lista = JSON.parse(localStorage.getItem('seguimientoCombinaciones') || '[]'); if (!Array.isArray(lista)) lista = []; } catch (e) { lista = []; }
+  var clave = nums.join('-');
+  if (lista.some(function(x){ return x && x.nums && x.nums.join('-') === clave; })) { aviso(TSEG.yaEsta); return; }
+  if (lista.length >= SEGUIMIENTO_MAX) { alert(TSEG.lleno); return; }
+  var desde = 0;
+  try { var r = await fetch('version.json', { cache: 'no-store' }); var j = await r.json(); desde = parseInt(j.concurso) || 0; } catch (e) {}
+  if (!desde) { alert(TSEG.error); return; }
+  lista.push({ tipo: tipo, nums: nums, desde: desde });
+  try { localStorage.setItem('seguimientoCombinaciones', JSON.stringify(lista)); } catch (e) { alert(TSEG.error); return; }
+  aviso(TSEG.guardado);
 }
 function aplicarFiltrosUnos(){const minDist=parseInt(document.getElementById('minDistanciaUnos').value)||0;document.querySelectorAll('#tablaUnos tbody tr').forEach(row=>{const dist=parseInt(row.getAttribute('data-distancia'))||0;row.style.display=dist>=minDist?'':'none';});}
 function aplicarFiltrosPares(){const minTot=parseInt(document.getElementById('minTotalesPares').value)||0;const minDist=parseInt(document.getElementById('minDistanciaPares').value)||0;document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{const tot=parseInt(row.getAttribute('data-total'))||0;const dist=parseInt(row.getAttribute('data-distancia'))||0;row.style.display=(tot>=minTot&&dist>=minDist)?'':'none';});}
@@ -283,7 +306,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b>'+p1+'</b></td><td><b>'+p2+'</b></td>'
         + '<td>'+p.posicion1+'</td><td>'+p.posicion2+'</td><td>'+p.concurso+'</td><td>'+p.fecha+'</td><td>'+p.total+'</td>'
         + '<td class="distancia-bold">'+p.distancia+'</td>'
-        + '<td><button class="btn-grafica" title="Buscar el par \' + p1 + \' y \' + p2 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+p1+','+p2+'\')">🔍 Buscar</button></td>'
+        + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="event.stopPropagation(); seguirCombinacion(\'par\',\''+p1+','+p2+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar el par \' + p1 + \' y \' + p2 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+p1+','+p2+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;
@@ -301,7 +324,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b>'+n1+'</b></td><td><b>'+n2+'</b></td><td><b>'+n3+'</b></td>'
         + '<td>'+t.posicion1+'</td><td>'+t.posicion2+'</td><td>'+t.posicion3+'</td><td>'+t.total+'</td><td>'+t.fecha+'</td><td>'+t.concurso+'</td>'
         + '<td class="distancia-bold">'+t.distancia+'</td>'
-        + '<td><button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\')">🔍 Buscar</button></td>'
+        + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="event.stopPropagation(); seguirCombinacion(\'tercia\',\''+n1+','+n2+','+n3+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;

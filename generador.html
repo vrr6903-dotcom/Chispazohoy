@@ -23,7 +23,13 @@
 .badge-numero-verde { display:inline-flex; align-items:center; justify-content:center; min-width:24px; height:24px; padding:0 4px; background:#22c55e; color:#fff; font-weight:700; border-radius:6px; font-size:0.85rem; }
 .tabla-historial { width:100%; border-collapse:collapse; margin-top:12px; }
 .tabla-historial th { background:#2f6690; color:#fff; padding:10px; text-align:center; font-size:0.9rem; }
-.tabla-historial td { padding:9px; text-align:center; border-bottom:1px solid #f1f5f9; font-size:0.9rem; }
+.gpa-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #cbd5e1;color:#334155;cursor:pointer;font-size:0.9rem;font-weight:600;padding:8px 12px;border-radius:20px;}
+.gpa-chip:hover{border-color:#2563eb;color:#2563eb;}
+.gpa-chip.activo{background:#eff6ff;border-color:#2563eb;color:#1d4ed8;}
+.gpa-atraso{background:#f1f5f9;border-radius:10px;padding:1px 7px;font-size:0.78rem;color:#64748b;}
+.gpa-chip.activo .gpa-atraso{background:#dbeafe;color:#1d4ed8;}
+#gpaBtnUsar:disabled{opacity:0.5;cursor:not-allowed;}
+
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-6FLMZMW6E4"></script>
@@ -51,6 +57,7 @@
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros<span class="tab-help">?<span class="tab-help-tip">Busca una combinación exacta en todo el historial de sorteos.</span></span></a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas<span class="tab-help">?<span class="tab-help-tip">Compara visualmente el atraso de cada número.</span></span></a>
   <a class="tab-btn-estadisticas activo" href="generador.html">🎲 Genera tus combinaciones<span class="tab-help">?<span class="tab-help-tip">Arma combinaciones de 5 a partir de los números recomendados.</span></span></a>
+  <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento<span class="tab-help">?<span class="tab-help-tip">Guarda pares y tercias y mira cuántos sorteos llevan sin salir.</span></span></a>
 </div>
 <div class="buscar-historial-caja">
   <p style="margin-top:0; color:#64748b; font-size:0.9rem;">Combina el número, el par y la tercia más atrasados del historial para armar una combinación de 5. Es un ejercicio estadístico sobre atrasos históricos, <strong>no una predicción de resultados</strong>.</p>
@@ -296,7 +303,9 @@
   }).then(function(data){
     if (!Array.isArray(data.recomendados)) throw new Error('formato invalido');
     RECOMENDADOS_GEN = new Set(data.recomendados);
-    seleccionadosGen = new Set(RECOMENDADOS_GEN);
+    var precargaGen = null;
+    try { var pend = localStorage.getItem('generadorPrecarga'); if (pend) { precargaGen = JSON.parse(pend); localStorage.removeItem('generadorPrecarga'); } } catch (e) {}
+    seleccionadosGen = (Array.isArray(precargaGen) && precargaGen.length) ? new Set(precargaGen.slice(0, MAX_GEN)) : new Set(RECOMENDADOS_GEN);
     if (Array.isArray(data.combinaciones)) {
       COMBINACIONES_GEN = data.combinaciones;
     }
