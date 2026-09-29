@@ -10880,8 +10880,8 @@
   {"concurso":12248,"fecha":"12/09/2026","sorteo":"Clasico","numeros":[1,4,6,23,25]},
   {"concurso":12249,"fecha":"13/09/2026","sorteo":"Clasico","numeros":[4,6,17,19,21]},
   {"concurso":12250,"fecha":"13/09/2026","sorteo":"Clasico","numeros":[2,7,8,10,18]},
-  {"concurso":12251,"fecha":"14/09/2026","sorteo":"D","numeros":[6,10,14,19,21]},
   {"concurso":12251,"fecha":"14/09/2026","sorteo":"De las tres","numeros":[6,10,14,19,21]},
+  {"concurso":12251,"fecha":"14/09/2026","sorteo":"D","numeros":[6,10,14,19,21]},
   {"concurso":12252,"fecha":"14/09/2026","sorteo":"Clasico","numeros":[13,15,17,18,19]},
   {"concurso":12253,"fecha":"15/09/2026","sorteo":"De las tres","numeros":[2,10,14,27,28]},
   {"concurso":12254,"fecha":"15/09/2026","sorteo":"Clasico","numeros":[4,17,19,24,27]},
@@ -10909,5 +10909,6 @@
   {"concurso":12276,"fecha":"26/09/2026","sorteo":"Clasico","numeros":[10,12,13,15,19]},
   {"concurso":12277,"fecha":"27/09/2026","sorteo":"De las tres","numeros":[11,14,20,22,24]},
   {"concurso":12278,"fecha":"27/09/2026","sorteo":"Clasico","numeros":[3,4,16,17,28]},
-  {"concurso":12279,"fecha":"28/09/2026","sorteo":"De las tres","numeros":[7,11,14,15,26]}
+  {"concurso":12279,"fecha":"28/09/2026","sorteo":"De las tres","numeros":[7,11,14,15,26]},
+  {"concurso":12280,"fecha":"28/09/2026","sorteo":"Clasico","numeros":[1,8,11,13,19]}
 ]
