@@ -111,11 +111,8 @@ function colorPorAtrasoTab(valor) {
 function dibujarGraficaAtraso(titulo, etiquetas, valores, idContenedor) {
   const contenido = document.getElementById(idContenedor);
   const maxDato = Math.max.apply(null, valores.concat([0]));
-  let ejeMax = 100, paso = 20;
-  if (maxDato > ejeMax) {
-    paso = maxDato <= 200 ? 25 : maxDato <= 500 ? 50 : 100;
-    ejeMax = Math.ceil(maxDato / paso) * paso;
-  }
+  const paso = maxDato <= 20 ? 5 : maxDato <= 50 ? 10 : maxDato <= 100 ? 20 : maxDato <= 200 ? 25 : maxDato <= 500 ? 50 : 100;
+  const ejeMax = Math.max(paso, Math.ceil((maxDato * 1.1) / paso) * paso);
   const n = valores.length;
   const altoSvg = 320, margenIzq = 46, margenDer = 24, margenInferior = 50, margenSuperior = 24;
   const altoDisponible = altoSvg - margenInferior - margenSuperior;
@@ -187,6 +184,23 @@ async function buscarGraficaAtraso() {
   const tipo = numeros.length === 1 ? 'Número' : numeros.length === 2 ? 'Par' : 'Tercia';
   resumen.innerHTML = '' + tipo + ' ' + numeros.join('-') + ': atraso actual por número';
   dibujarGraficaAtraso('Distancia por Número', etiquetas, valores, 'contenidoGraficaAtraso');
+  const EN2 = document.documentElement.lang === 'en';
+  if (numeros.length >= 2) {
+    let ultimoComb = 0, fechaComb = '';
+    for (let i = historial.length - 1; i >= 0; i--) {
+      if (numeros.every(function(n){ return historial[i].numeros.indexOf(n) !== -1; })) { ultimoComb = historial[i].concurso; fechaComb = historial[i].fecha; break; }
+    }
+    const atrasoComb = ultimoComb > 0 ? (ultimoConcurso - ultimoComb) : ultimoConcurso;
+    const nombreComb = numeros.length === 2 ? (EN2 ? 'The pair ' : 'El par ') : (EN2 ? 'The triplet ' : 'La tercia ');
+    let txt;
+    if (ultimoComb === 0) txt = nombreComb + numeros.join('-') + (EN2 ? ' has never hit together in the history.' : ' no ha salido junta en todo el historial.');
+    else if (atrasoComb === 0) txt = nombreComb + numeros.join('-') + (EN2 ? ' hit in the latest draw.' : ' salió en el último concurso.');
+    else txt = nombreComb + numeros.join('-') + (EN2 ? ' has gone <b>' + atrasoComb + '</b> draws without hitting together (last time: draw ' + ultimoComb + ', ' + fechaComb + ').' : ' lleva <b>' + atrasoComb + '</b> concursos sin salir junta (última vez: concurso ' + ultimoComb + ', ' + fechaComb + ').');
+    document.getElementById('contenidoGraficaAtraso').insertAdjacentHTML('afterbegin', '<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:0.95rem;">' + txt + '</div>');
+  }
+  if (valores.indexOf(0) !== -1) {
+    document.getElementById('contenidoGraficaAtraso').insertAdjacentHTML('beforeend', '<div style="font-size:0.8rem;color:#64748b;margin-top:6px;">' + (EN2 ? '0 = hit in the latest draw' : '0 = salió en el último concurso') + '</div>');
+  }
 }
 
 (function () {
@@ -196,11 +210,11 @@ async function buscarGraficaAtraso() {
   var TOP_N_GPA = 10;
   var EN = document.documentElement.lang === 'en';
   var T = EN ? {
-    intro: 'Tap the pairs you want and take them to Generate combinations.',
+    intro: 'Tap the pairs you want and take them to Generate combinations. The grey number is how many draws that pair has gone without hitting.',
     seleccionados: 'Selected', usar: '\u27a1\ufe0f Use in Generate combinations', limpiar: 'Clear selection',
     limite: 'You can take up to ' + MAX_SEL_GPA + ' numbers to Generate combinations.'
   } : {
-    intro: 'Toca los pares que te interesen y llevalos a Generar combinaciones.',
+    intro: 'Toca los pares que te interesen y llevalos a Generar combinaciones. El número gris es cuántos concursos lleva ese par sin salir.',
     seleccionados: 'Seleccionados', usar: '\u27a1\ufe0f Usar en Generar combinaciones', limpiar: 'Limpiar seleccion',
     limite: 'Puedes llevar hasta ' + MAX_SEL_GPA + ' numeros a Generar combinaciones.'
   };
