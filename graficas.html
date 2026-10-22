@@ -183,7 +183,7 @@ async function buscarGraficaAtraso() {
   const etiquetas = numeros.map(function(n){ return 'N° ' + n + ''; });
   const tipo = numeros.length === 1 ? 'Número' : numeros.length === 2 ? 'Par' : 'Tercia';
   resumen.innerHTML = '' + tipo + ' ' + numeros.join('-') + ': atraso actual por número';
-  dibujarGraficaAtraso('Distancia por Número', etiquetas, valores, 'contenidoGraficaAtraso');
+  dibujarGraficaAtraso('Atraso por Número', etiquetas, valores, 'contenidoGraficaAtraso');
   const EN2 = document.documentElement.lang === 'en';
   if (numeros.length >= 2) {
     let ultimoComb = 0, fechaComb = '';
