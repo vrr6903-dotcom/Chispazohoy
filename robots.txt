@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://resultadoschispazohoy.com/sitemap.xml
+Sitemap: https://www.resultadoschispazohoy.com/sitemap.xml
