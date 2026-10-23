@@ -155,10 +155,22 @@ function toggleUltimosResultados() {
       <div class="filter-bar">
         <label>Mín. Totales:</label><input type="number" id="minTotalesPares" value="35">
         <label>Mín. Atraso:</label><input type="number" id="minDistanciaPares" value="0">
-        <button class="btn-aplicar" onclick="aplicarFiltrosPares()">Aplicar Filtros</button>
-        <label>Busca tu par:</label><input type="number" id="buscarPar1" min="1" max="99" placeholder="N1" style="width:60px"><input type="number" id="buscarPar2" min="1" max="99" placeholder="N2" style="width:60px">
-        <button class="btn-aplicar" onclick="buscarParTabla()">Buscar</button>
+        <button class="btn-aplicar" onclick="renderPares()">Buscar</button>
       </div>
+      <details class="pares-mas-filtros" id="paresMasFiltros">
+        <summary id="paresMasFiltrosEtq"></summary>
+        <div class="pares-filtros-grid">
+          <div class="pares-fila-completa">
+            <label><input type="checkbox" id="chkParesTotales" checked> <span id="etqParesTotales"></span></label>
+            <label><input type="checkbox" id="chkParesDetalle"> <span id="etqParesDetalle"></span></label>
+          </div>
+          <label>N1 <select id="selParesN1"></select></label>
+          <label>N2 <select id="selParesN2"></select></label>
+          <label>P1 <select id="selParesP1" disabled></select></label>
+          <label>P2 <select id="selParesP2" disabled></select></label>
+        </div>
+      </details>
+      <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
           <thead><tr><th>N1</th><th>N2</th><th>P1</th><th>P2</th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
@@ -192,6 +204,14 @@ function toggleUltimosResultados() {
 @keyframes pulso-grafica{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,0.25);}50%{box-shadow:0 0 0 5px rgba(37,99,235,0);}}
 .btn-seguir{animation:none !important;background:#fffbeb;border-color:#fcd34d;color:#b45309;margin-right:4px;}
 .btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
+.pares-mas-filtros{margin:8px 0 4px;}
+.pares-mas-filtros summary{cursor:pointer;font-weight:600;color:#2563eb;font-size:0.9rem;padding:4px 0;}
+.pares-filtros-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin-top:8px;}
+.pares-filtros-grid label{display:flex;align-items:center;gap:6px;font-size:0.9rem;color:#334155;}
+.pares-filtros-grid select{flex:1;min-width:0;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;background:#fff;}
+.pares-filtros-grid select:disabled{opacity:0.5;}
+.pares-fila-completa{grid-column:1 / -1;display:flex;gap:18px;flex-wrap:wrap;}
+.pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
 function buscarSeleccionHistorial(numerosCsv){
@@ -221,17 +241,16 @@ async function seguirCombinacion(tipo, csv, btn){
   aviso(TSEG.guardado);
 }
 function aplicarFiltrosUnos(){const minDist=parseInt(document.getElementById('minDistanciaUnos').value)||0;document.querySelectorAll('#tablaUnos tbody tr').forEach(row=>{const dist=parseInt(row.getAttribute('data-distancia'))||0;row.style.display=dist>=minDist?'':'none';});}
-function aplicarFiltrosPares(){const minTot=parseInt(document.getElementById('minTotalesPares').value)||0;const minDist=parseInt(document.getElementById('minDistanciaPares').value)||0;document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{const tot=parseInt(row.getAttribute('data-total'))||0;const dist=parseInt(row.getAttribute('data-distancia'))||0;row.style.display=(tot>=minTot&&dist>=minDist)?'':'none';});}
+function aplicarFiltrosPares(){if(window.renderPares){window.renderPares();}}
 function aplicarFiltrosTercias(){const minTot=parseInt(document.getElementById('minTotalesTercias').value)||0;const minDist=parseInt(document.getElementById('minDistanciaTercias').value)||0;document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{const tot=parseInt(row.getAttribute('data-total'))||0;const dist=parseInt(row.getAttribute('data-distancia'))||0;row.style.display=(tot>=minTot&&dist>=minDist)?'':'none';});}
 function marcarVerde(celda,activo){if(!celda)return;const el=celda.querySelector('b')||celda;el.classList.toggle('resaltado-verde',!!activo);}
 function buscarNumeroUno(){const val=document.getElementById('buscarUno').value.trim();if(!val)return;const num=val.padStart(2,'0');document.querySelectorAll('#tablaUnos tbody tr').forEach(row=>{const celda=row.cells[0];const n1=celda.textContent.trim();const coincide=(n1===num);row.style.display=coincide?'':'none';marcarVerde(celda,coincide);});}
-function buscarParTabla(){const a=document.getElementById('buscarPar1').value.trim();const b=document.getElementById('buscarPar2').value.trim();if(!a||!b)return;const n1=a.padStart(2,'0'),n2=b.padStart(2,'0');document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{const c1=row.cells[0],c2=row.cells[1];const p1=c1.textContent.trim(),p2=c2.textContent.trim();const coincide=(p1===n1&&p2===n2)||(p1===n2&&p2===n1);row.style.display=coincide?'':'none';marcarVerde(c1,coincide);marcarVerde(c2,coincide);});}
 function buscarTercTabla(){const a=document.getElementById('buscarTer1').value.trim();const b=document.getElementById('buscarTer2').value.trim();const c=document.getElementById('buscarTer3').value.trim();if(!a||!b||!c)return;const nums=[a,b,c].map(x=>x.padStart(2,'0')).sort().join(',');document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{const c0=row.cells[0],c1=row.cells[1],c2=row.cells[2];const vals=[c0.textContent.trim(),c1.textContent.trim(),c2.textContent.trim()].sort().join(',');const coincide=(vals===nums);row.style.display=coincide?'':'none';marcarVerde(c0,coincide);marcarVerde(c1,coincide);marcarVerde(c2,coincide);});}
 function filtrarPorTercia(t1,t2,t3){document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{const c=row.querySelectorAll('td');if(c.length>=3){const coincide=(c[0].textContent.trim()===t1&&c[1].textContent.trim()===t2&&c[2].textContent.trim()===t3);row.style.display=coincide?'':'none';}})}
 function resaltarCelda(celda,f1,f2){if(!celda)return;const txt=celda.textContent.trim();const coincide=(f1&&txt===f1)||(f2&&txt===f2);marcarVerde(celda,coincide);}
 function filtrarPorNumero(num){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con el número ' + num + ': Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones con el número ' + num + ': Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{if(row.cells.length<2)return;const p1=row.cells[0].textContent.trim(),p2=row.cells[1].textContent.trim();const coincide=(p1===num||p2===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);}});document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const n1=row.cells[0].textContent.trim(),n2=row.cells[1].textContent.trim(),n3=row.cells[2].textContent.trim();const coincide=(n1===num||n2===num||n3===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);resaltarCelda(row.cells[2],num,null);}});}
 function filtrarPorPar(n1Par,n2Par){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con los números ' + n1Par + ' y ' + n2Par + ': Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones que contienen a ' + n1Par + ' y ' + n2Par + ': Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{if(row.cells.length<2)return;const p1=row.cells[0].textContent.trim(),p2=row.cells[1].textContent.trim();const coincide=(p1===n1Par||p2===n1Par)&&(p1===n2Par||p2===n2Par);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],n1Par,n2Par);resaltarCelda(row.cells[1],n1Par,n2Par);}});document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const t1=row.cells[0].textContent.trim(),t2=row.cells[1].textContent.trim(),t3=row.cells[2].textContent.trim();const coincide=(t1===n1Par||t2===n1Par||t3===n1Par)&&(t1===n2Par||t2===n2Par||t3===n2Par);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],n1Par,n2Par);resaltarCelda(row.cells[1],n1Par,n2Par);resaltarCelda(row.cells[2],n1Par,n2Par);}});}
-function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones de dos números: Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones de tres números: Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tr,#tablaTercias tr,#tablaUnos tr').forEach(r=>{r.style.display='';});document.querySelectorAll('.resaltado-verde').forEach(el=>el.classList.remove('resaltado-verde'));}
+function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones de dos números: Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones de tres números: Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tr,#tablaTercias tr,#tablaUnos tr').forEach(r=>{r.style.display='';});document.querySelectorAll('.resaltado-verde').forEach(el=>el.classList.remove('resaltado-verde'));if(window.resetFiltrosPares){window.resetFiltrosPares();}}
 </script>
 <script>
 (function(){
@@ -331,6 +350,157 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     tbody.innerHTML = html;
   }
 
+  // ---------- Filtros de la tabla de Pares ----------
+  const LIMITE_FILAS_PARES = 500;   // máximo de filas dibujadas a la vez (celulares)
+  const NUM_POS_SORTEO = 5;         // posiciones por sorteo: P1 va de 1 a 4 y P2 de 2 a 5
+  const EN_PARES = document.documentElement.lang === 'en';
+  const TP = EN_PARES
+    ? { mas:'More filters', totales:'Totals', detalle:'By position', todos:'All',
+        mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; narrow the filters)',
+        sinRes:'No results. Try lowering Min. Totals or Min. Gap.', ninguna:'Check Totals or By position to see rows.' }
+    : { mas:'Más filtros', totales:'Totales', detalle:'Detalle', todos:'Todos',
+        mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; afina los filtros)',
+        sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.', ninguna:'Marca Totales o Detalle para ver filas.' };
+
+  let paresGeneral = [];        // pares.json: filas generales (posiciones 0 y 0)
+  let paresDetalle = [];        // pares_detalle.json: filas por posición (se carga solo con la casilla Detalle)
+  let paresDetalleCargado = false;
+
+  function elp(id){ return document.getElementById(id); }
+
+  function llenarSelect(id, valores, rellenarCeros){
+    const sel = elp(id);
+    if (!sel) return;
+    let h = '<option value="">'+TP.todos+'</option>';
+    valores.forEach(v => { h += '<option value="'+v+'">'+(rellenarCeros ? String(v).padStart(2,'0') : v)+'</option>'; });
+    sel.innerHTML = h;
+  }
+
+  function etiquetasFiltrosPares(){
+    if (elp('paresMasFiltrosEtq')) elp('paresMasFiltrosEtq').textContent = TP.mas;
+    if (elp('etqParesTotales')) elp('etqParesTotales').textContent = TP.totales;
+    if (elp('etqParesDetalle')) elp('etqParesDetalle').textContent = TP.detalle;
+    const p1 = [], p2 = [];
+    for (let i = 1; i < NUM_POS_SORTEO; i++) p1.push(i);
+    for (let i = 2; i <= NUM_POS_SORTEO; i++) p2.push(i);
+    llenarSelect('selParesP1', p1, false);
+    llenarSelect('selParesP2', p2, false);
+    llenarSelect('selParesN1', [], true);
+    llenarSelect('selParesN2', [], true);
+  }
+
+  function iniciarMenusNumerosPares(){
+    const n1 = new Set(), n2 = new Set();
+    paresGeneral.forEach(p => { n1.add(p.par01); n2.add(p.par02); });
+    const ordenar = conj => Array.from(conj).sort((a, b) => a - b);
+    llenarSelect('selParesN1', ordenar(n1), true);
+    llenarSelect('selParesN2', ordenar(n2), true);
+  }
+
+  function actualizarMenusPosicion(){
+    const detalle = elp('chkParesDetalle') && elp('chkParesDetalle').checked;
+    ['selParesP1', 'selParesP2'].forEach(id => {
+      const s = elp(id);
+      if (!s) return;
+      if (!detalle) s.value = '';
+      s.disabled = !detalle;
+    });
+  }
+
+  function valorFiltro(id){ const s = elp(id); return s ? s.value : ''; }
+
+  function renderPares(){
+    const tbody = elp('tbodyPares');
+    if (!tbody) return;
+    const minTot = parseInt(elp('minTotalesPares').value) || 0;
+    const minDist = parseInt(elp('minDistanciaPares').value) || 0;
+    const f1 = valorFiltro('selParesN1'), f2 = valorFiltro('selParesN2');
+    const g1 = valorFiltro('selParesP1'), g2 = valorFiltro('selParesP2');
+    const verTotales = elp('chkParesTotales').checked;
+    const verDetalle = elp('chkParesDetalle').checked;
+
+    let base = [];
+    if (verTotales) base = base.concat(paresGeneral);
+    if (verDetalle) base = base.concat(paresDetalle);
+
+    const filtradas = base.filter(p =>
+      p.total >= minTot && p.distancia >= minDist
+      && (!f1 || p.par01 === Number(f1)) && (!f2 || p.par02 === Number(f2))
+      && (!g1 || p.posicion1 === Number(g1)) && (!g2 || p.posicion2 === Number(g2)));
+    filtradas.sort((a, b) => b.distancia - a.distancia);
+
+    const mostrar = filtradas.slice(0, LIMITE_FILAS_PARES);
+    pintarPares(mostrar, atrasoMapGlobal);
+
+    const estado = elp('estadoPares');
+    if (!estado) return;
+    if (!verTotales && !verDetalle) {
+      estado.textContent = TP.ninguna;
+    } else if (!filtradas.length) {
+      estado.textContent = TP.sinRes;
+    } else {
+      let txt = TP.mostrando.replace('{a}', mostrar.length).replace('{b}', filtradas.length);
+      if (filtradas.length > mostrar.length) txt += ' ' + TP.recorte.replace('{n}', LIMITE_FILAS_PARES);
+      estado.textContent = txt;
+    }
+  }
+  window.renderPares = renderPares;
+
+  // "Ver Todos" (ver limpiarFiltrosCruzados): mínimos y menús vuelven a su valor inicial.
+  window.resetFiltrosPares = function(){
+    const mt = elp('minTotalesPares'), md = elp('minDistanciaPares');
+    if (mt) mt.value = mt.defaultValue;
+    if (md) md.value = md.defaultValue;
+    ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => { const s = elp(id); if (s) s.value = ''; });
+    if (elp('chkParesTotales')) elp('chkParesTotales').checked = true;
+    if (elp('chkParesDetalle')) elp('chkParesDetalle').checked = false;
+    actualizarMenusPosicion();
+    renderPares();
+  };
+
+  async function cargarParesDetalle(){
+    if (paresDetalleCargado) return;
+    const estado = elp('estadoPares');
+    if (estado) estado.textContent = TEXTO_CARGANDO;
+    const versionGuardada = await leerDB('version');
+    const cache = await leerDB('paresDet');
+    if (cache && versionGuardada !== null) {
+      paresDetalle = cache;
+      paresDetalleCargado = true;
+      return;
+    }
+    try {
+      const datos = await fetch('pares_detalle.json').then(r => r.json());
+      paresDetalle = datos;
+      paresDetalleCargado = true;
+      guardarDB('paresDet', datos);
+    } catch (e) {
+      console.error('No se pudo cargar pares_detalle.json', e);
+      if (estado) estado.textContent = TEXTO_ERROR;
+    }
+  }
+
+  function conectarEventosFiltrosPares(){
+    const chkTot = elp('chkParesTotales'), chkDet = elp('chkParesDetalle');
+    if (chkTot) chkTot.addEventListener('change', renderPares);
+    if (chkDet) chkDet.addEventListener('change', async function(){
+      actualizarMenusPosicion();
+      if (chkDet.checked) await cargarParesDetalle();
+      renderPares();
+    });
+    ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => {
+      const s = elp(id);
+      if (s) s.addEventListener('change', renderPares);
+    });
+    ['minTotalesPares', 'minDistanciaPares'].forEach(id => {
+      const i = elp(id);
+      if (i) i.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') renderPares(); });
+    });
+  }
+
+  etiquetasFiltrosPares();
+  conectarEventosFiltrosPares();
+
   let atrasoMapGlobal = {};
   let terciasCargadas = false;
 
@@ -350,11 +520,13 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
 
     if (versionActual !== null && versionGuardada === versionActual) {
       const unosCache = await leerDB('unos');
-      const paresCache = await leerDB('pares');
+      const paresCache = await leerDB('paresGen');
       if (unosCache && paresCache) {
         atrasoMapGlobal = construirAtrasoMap(unosCache);
         pintarUnos(unosCache);
-        pintarPares(paresCache, atrasoMapGlobal);
+        paresGeneral = paresCache;
+        iniciarMenusNumerosPares();
+        renderPares();
         return;
       }
     }
@@ -366,12 +538,15 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
       ]);
       atrasoMapGlobal = construirAtrasoMap(datosUnos);
       pintarUnos(datosUnos);
-      pintarPares(datosPares, atrasoMapGlobal);
+      paresGeneral = datosPares;
+      iniciarMenusNumerosPares();
+      renderPares();
 
       if (versionActual !== null) {
         guardarDB('version', versionActual);
         guardarDB('unos', datosUnos);
-        guardarDB('pares', datosPares);
+        guardarDB('paresGen', datosPares);
+        guardarDB('paresDet', null);
         guardarDB('tercias', null);
       }
     } catch (e) {
