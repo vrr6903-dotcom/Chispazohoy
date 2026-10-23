@@ -265,7 +265,7 @@ async function buscarGraficaAtraso() {
 
   fetch('pares.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (data) {
     if (!Array.isArray(data)) return;
-    var top = data.slice().sort(function (a, b) { return b.distancia - a.distancia; }).slice(0, TOP_N_GPA);
+    var top = data.filter(function (p) { return !p.posicion1 && !p.posicion2; }).sort(function (a, b) { return b.distancia - a.distancia; }).slice(0, TOP_N_GPA);
     cont.innerHTML = top.map(function (p) {
       var p1 = pad(p.par01), p2 = pad(p.par02);
       return '<button type="button" class="gpa-chip" data-p1="' + p1 + '" data-p2="' + p2 + '" onclick="toggleParGPA(this)">'
