@@ -165,8 +165,7 @@ function toggleUltimosResultados() {
       <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
-          <thead><tr><th>N1</th><th>N2</th><th>P1</th><th>P2</th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr>
-          <tr class="fila-filtros-enc"><th><div class="sel-enc"><select id="selParesN1" title="N1"></select></div></th><th><div class="sel-enc"><select id="selParesN2" title="N2"></select></div></th><th><div class="sel-enc"><select id="selParesP1" title="P1" disabled></select></div></th><th><div class="sel-enc"><select id="selParesP2" title="P2" disabled></select></div></th><th></th><th></th><th></th><th></th><th></th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1" disabled></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2" disabled></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
     <div class="stats-card">
@@ -199,11 +198,13 @@ function toggleUltimosResultados() {
 .btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
 .pares-ver{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;font-size:0.9rem;color:#334155;}
 .pares-ver label{display:flex;align-items:center;gap:6px;}
-.fila-filtros-enc th{background:#e8f1f8 !important;padding:4px 3px !important;}
+.th-filtro{padding:4px 3px !important;}
 .sel-enc{position:relative;display:block;}
-.sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:4px 12px 4px 4px;font-size:0.75rem;border:1px solid #cbd5e1;border-radius:4px;background:#fff;color:#1e293b;text-align:center;text-align-last:center;}
-.sel-enc select:disabled{opacity:0.45;}
-.sel-enc::after{content:'▾';position:absolute;right:3px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#64748b;}
+.sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:6px 14px 6px 4px;font-family:inherit;font-size:inherit;font-weight:700;border:1px solid transparent;border-radius:6px;background:transparent;color:#fff;text-align:center;text-align-last:center;cursor:pointer;}
+.sel-enc select.activo{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.7);}
+.sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
+.sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
+.sel-enc::after{content:'▾';position:absolute;right:3px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
@@ -364,7 +365,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   function llenarSelect(id, valores, rellenarCeros){
     const sel = elp(id);
     if (!sel) return;
-    let h = '<option value="">'+TP.todos+'</option>';
+    let h = '<option value="">'+(sel.dataset.etq || TP.todos)+'</option>';
     valores.forEach(v => { h += '<option value="'+v+'">'+(rellenarCeros ? String(v).padStart(2,'0') : v)+'</option>'; });
     sel.innerHTML = h;
   }
@@ -411,6 +412,10 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     const g1 = valorFiltro('selParesP1'), g2 = valorFiltro('selParesP2');
     const verTotales = elp('chkParesTotales').checked;
     const verDetalle = elp('chkParesDetalle').checked;
+    ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => {
+      const s = elp(id);
+      if (s) s.classList.toggle('activo', s.value !== '');   // resalta el encabezado que tiene un filtro puesto
+    });
 
     let base = [];
     if (verTotales) base = base.concat(paresGeneral);
