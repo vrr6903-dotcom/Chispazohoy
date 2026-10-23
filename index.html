@@ -157,23 +157,16 @@ function toggleUltimosResultados() {
         <label>Mín. Atraso:</label><input type="number" id="minDistanciaPares" value="0">
         <button class="btn-aplicar" onclick="renderPares()">Buscar</button>
       </div>
-      <details class="pares-mas-filtros" id="paresMasFiltros">
-        <summary id="paresMasFiltrosEtq"></summary>
-        <div class="pares-filtros-grid">
-          <div class="pares-fila-completa">
-            <label><input type="checkbox" id="chkParesTotales" checked> <span id="etqParesTotales"></span></label>
-            <label><input type="checkbox" id="chkParesDetalle"> <span id="etqParesDetalle"></span></label>
-          </div>
-          <label>N1 <select id="selParesN1"></select></label>
-          <label>N2 <select id="selParesN2"></select></label>
-          <label>P1 <select id="selParesP1" disabled></select></label>
-          <label>P2 <select id="selParesP2" disabled></select></label>
-        </div>
-      </details>
+      <div class="pares-ver">
+        <span id="etqParesVer"></span>
+        <label><input type="checkbox" id="chkParesTotales" checked> <span id="etqParesTotales"></span></label>
+        <label><input type="checkbox" id="chkParesDetalle"> <span id="etqParesDetalle"></span></label>
+      </div>
       <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
-          <thead><tr><th>N1</th><th>N2</th><th>P1</th><th>P2</th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
+          <thead><tr><th>N1</th><th>N2</th><th>P1</th><th>P2</th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr>
+          <tr class="fila-filtros-enc"><th><div class="sel-enc"><select id="selParesN1" title="N1"></select></div></th><th><div class="sel-enc"><select id="selParesN2" title="N2"></select></div></th><th><div class="sel-enc"><select id="selParesP1" title="P1" disabled></select></div></th><th><div class="sel-enc"><select id="selParesP2" title="P2" disabled></select></div></th><th></th><th></th><th></th><th></th><th></th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
     <div class="stats-card">
@@ -204,13 +197,13 @@ function toggleUltimosResultados() {
 @keyframes pulso-grafica{0%,100%{box-shadow:0 0 0 0 rgba(37,99,235,0.25);}50%{box-shadow:0 0 0 5px rgba(37,99,235,0);}}
 .btn-seguir{animation:none !important;background:#fffbeb;border-color:#fcd34d;color:#b45309;margin-right:4px;}
 .btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
-.pares-mas-filtros{margin:8px 0 4px;}
-.pares-mas-filtros summary{cursor:pointer;font-weight:600;color:#2563eb;font-size:0.9rem;padding:4px 0;}
-.pares-filtros-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin-top:8px;}
-.pares-filtros-grid label{display:flex;align-items:center;gap:6px;font-size:0.9rem;color:#334155;}
-.pares-filtros-grid select{flex:1;min-width:0;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.9rem;background:#fff;}
-.pares-filtros-grid select:disabled{opacity:0.5;}
-.pares-fila-completa{grid-column:1 / -1;display:flex;gap:18px;flex-wrap:wrap;}
+.pares-ver{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;font-size:0.9rem;color:#334155;}
+.pares-ver label{display:flex;align-items:center;gap:6px;}
+.fila-filtros-enc th{background:#e8f1f8 !important;padding:4px 3px !important;}
+.sel-enc{position:relative;display:block;}
+.sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:4px 12px 4px 4px;font-size:0.75rem;border:1px solid #cbd5e1;border-radius:4px;background:#fff;color:#1e293b;text-align:center;text-align-last:center;}
+.sel-enc select:disabled{opacity:0.45;}
+.sel-enc::after{content:'▾';position:absolute;right:3px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#64748b;}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
@@ -355,10 +348,10 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   const NUM_POS_SORTEO = 5;         // posiciones por sorteo: P1 va de 1 a 4 y P2 de 2 a 5
   const EN_PARES = document.documentElement.lang === 'en';
   const TP = EN_PARES
-    ? { mas:'More filters', totales:'Totals', detalle:'By position', todos:'All',
+    ? { ver:'Show:', totales:'Totals', detalle:'By position', todos:'All',
         mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; narrow the filters)',
         sinRes:'No results. Try lowering Min. Totals or Min. Gap.', ninguna:'Check Totals or By position to see rows.' }
-    : { mas:'Más filtros', totales:'Totales', detalle:'Detalle', todos:'Todos',
+    : { ver:'Ver:', totales:'Totales', detalle:'Detalle', todos:'Todos',
         mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; afina los filtros)',
         sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.', ninguna:'Marca Totales o Detalle para ver filas.' };
 
@@ -377,7 +370,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   }
 
   function etiquetasFiltrosPares(){
-    if (elp('paresMasFiltrosEtq')) elp('paresMasFiltrosEtq').textContent = TP.mas;
+    if (elp('etqParesVer')) elp('etqParesVer').textContent = TP.ver;
     if (elp('etqParesTotales')) elp('etqParesTotales').textContent = TP.totales;
     if (elp('etqParesDetalle')) elp('etqParesDetalle').textContent = TP.detalle;
     const p1 = [], p2 = [];
