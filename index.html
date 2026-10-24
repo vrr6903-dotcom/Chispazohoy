@@ -131,6 +131,7 @@ function toggleUltimosResultados() {
 </style>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas activo" href="index.html">📊 Números</a>
+  <a class="tab-btn-estadisticas" href="trios.html">🧩 Trios</a>
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
@@ -157,23 +158,6 @@ function toggleUltimosResultados() {
           <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
-    <div class="stats-card">
-      <div class="stats-title" id="tituloTercias"><span>🧩 Combinaciones de tres números: Frecuencia > 25</span></div>
-      <div class="filter-bar">
-        <label>Mín. Totales:</label><input type="number" id="minTotalesTercias" value="25">
-        <label>Mín. Atraso:</label><input type="number" id="minDistanciaTercias" value="0">
-        <button class="btn-aplicar" onclick="aplicarFiltrosTercias()">Aplicar Filtros</button>
-        <label>Busca tu trío:</label><input type="number" id="buscarTer1" min="1" max="99" placeholder="N1" style="width:55px"><input type="number" id="buscarTer2" min="1" max="99" placeholder="N2" style="width:55px"><input type="number" id="buscarTer3" min="1" max="99" placeholder="N3" style="width:55px">
-        <button class="btn-aplicar" onclick="buscarTercTabla()">Buscar</button>
-      </div>
-      <button id="btnMostrarTercias" class="btn-aplicar" onclick="mostrarTablaTercias()">👁️ Mostrar Tercias</button>
-      <div id="contTablaTercias" class="table-scroll-container" style="display:none;">
-        <table class="table-stats" id="tablaTercias">
-          <thead><tr><th>N1</th><th>N2</th><th>N3</th><th>P1</th><th>P2</th><th>P3</th><th>Total</th><th>Fecha</th><th>Concurso</th><th>Atraso</th><th>Gráfica</th></tr></thead>
-          <tbody id="tbodyTercias"></tbody>
-        </table>
-      </div>
-    </div>
 </div>
   </section>
   <aside class="aside-right">
@@ -194,7 +178,7 @@ function toggleUltimosResultados() {
 .sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
 .sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
 .sel-enc::after{content:'▾';position:absolute;right:5px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
-@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6){display:none;}}
+@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
@@ -230,9 +214,9 @@ function marcarVerde(celda,activo){if(!celda)return;const el=celda.querySelector
 function buscarTercTabla(){const a=document.getElementById('buscarTer1').value.trim();const b=document.getElementById('buscarTer2').value.trim();const c=document.getElementById('buscarTer3').value.trim();if(!a||!b||!c)return;const nums=[a,b,c].map(x=>x.padStart(2,'0')).sort().join(',');document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{const c0=row.cells[0],c1=row.cells[1],c2=row.cells[2];const vals=[c0.textContent.trim(),c1.textContent.trim(),c2.textContent.trim()].sort().join(',');const coincide=(vals===nums);row.style.display=coincide?'':'none';marcarVerde(c0,coincide);marcarVerde(c1,coincide);marcarVerde(c2,coincide);});}
 function filtrarPorTercia(t1,t2,t3){document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{const c=row.querySelectorAll('td');if(c.length>=3){const coincide=(c[0].textContent.trim()===t1&&c[1].textContent.trim()===t2&&c[2].textContent.trim()===t3);row.style.display=coincide?'':'none';}})}
 function resaltarCelda(celda,f1,f2){if(!celda)return;const txt=celda.textContent.trim();const coincide=(f1&&txt===f1)||(f2&&txt===f2);marcarVerde(celda,coincide);}
-function filtrarPorNumero(num){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con el número ' + num + ': Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones con el número ' + num + ': Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{if(row.cells.length<2)return;const p1=row.cells[0].textContent.trim(),p2=row.cells[1].textContent.trim();const coincide=(p1===num||p2===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);}});document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const n1=row.cells[0].textContent.trim(),n2=row.cells[1].textContent.trim(),n3=row.cells[2].textContent.trim();const coincide=(n1===num||n2===num||n3===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);resaltarCelda(row.cells[2],num,null);}});}
-function filtrarPorPar(n1Par,n2Par){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con los números ' + n1Par + ' y ' + n2Par + ': Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones que contienen a ' + n1Par + ' y ' + n2Par + ': Frecuencia > 25</span>';(function(){const a=document.getElementById('selParesN1'),b=document.getElementById('selParesN2');const x=Math.min(parseInt(n1Par),parseInt(n2Par)),y=Math.max(parseInt(n1Par),parseInt(n2Par));if(a&&b){a.value=String(x);b.value=String(y);}if(window.renderPares)window.renderPares();})();document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const t1=row.cells[0].textContent.trim(),t2=row.cells[1].textContent.trim(),t3=row.cells[2].textContent.trim();const coincide=(t1===n1Par||t2===n1Par||t3===n1Par)&&(t1===n2Par||t2===n2Par||t3===n2Par);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],n1Par,n2Par);resaltarCelda(row.cells[1],n1Par,n2Par);resaltarCelda(row.cells[2],n1Par,n2Par);}});}
-function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones de dos números: Frecuencia > 35</span>';document.getElementById('tituloTercias').innerHTML='<span>🧩 Combinaciones de tres números: Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tr,#tablaTercias tr,#tablaUnos tr').forEach(r=>{r.style.display='';});document.querySelectorAll('.resaltado-verde').forEach(el=>el.classList.remove('resaltado-verde'));if(window.resetFiltrosPares){window.resetFiltrosPares();}var su=document.getElementById('selUnosN1');if(su){su.value='';su.classList.remove('activo');}}
+function filtrarPorNumero(num){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con el número ' + num + ': Frecuencia > 35</span>';(document.getElementById('tituloTercias')||{}).innerHTML='<span>🧩 Combinaciones con el número ' + num + ': Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tbody tr').forEach(row=>{if(row.cells.length<2)return;const p1=row.cells[0].textContent.trim(),p2=row.cells[1].textContent.trim();const coincide=(p1===num||p2===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);}});document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const n1=row.cells[0].textContent.trim(),n2=row.cells[1].textContent.trim(),n3=row.cells[2].textContent.trim();const coincide=(n1===num||n2===num||n3===num);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],num,null);resaltarCelda(row.cells[1],num,null);resaltarCelda(row.cells[2],num,null);}});}
+function filtrarPorPar(n1Par,n2Par){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones con los números ' + n1Par + ' y ' + n2Par + ': Frecuencia > 35</span>';(document.getElementById('tituloTercias')||{}).innerHTML='<span>🧩 Combinaciones que contienen a ' + n1Par + ' y ' + n2Par + ': Frecuencia > 25</span>';(function(){const a=document.getElementById('selParesN1'),b=document.getElementById('selParesN2');const x=Math.min(parseInt(n1Par),parseInt(n2Par)),y=Math.max(parseInt(n1Par),parseInt(n2Par));if(a&&b){a.value=String(x);b.value=String(y);}if(window.renderPares)window.renderPares();})();document.querySelectorAll('#tablaTercias tbody tr').forEach(row=>{if(row.cells.length<3)return;const t1=row.cells[0].textContent.trim(),t2=row.cells[1].textContent.trim(),t3=row.cells[2].textContent.trim();const coincide=(t1===n1Par||t2===n1Par||t3===n1Par)&&(t1===n2Par||t2===n2Par||t3===n2Par);row.style.display=coincide?'':'none';if(coincide){resaltarCelda(row.cells[0],n1Par,n2Par);resaltarCelda(row.cells[1],n1Par,n2Par);resaltarCelda(row.cells[2],n1Par,n2Par);}});}
+function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHTML='<span>🔗 Combinaciones de dos números: Frecuencia > 35</span>';(document.getElementById('tituloTercias')||{}).innerHTML='<span>🧩 Combinaciones de tres números: Frecuencia > 25</span>';document.querySelectorAll('#tablaPares tr,#tablaTercias tr,#tablaUnos tr').forEach(r=>{r.style.display='';});document.querySelectorAll('.resaltado-verde').forEach(el=>el.classList.remove('resaltado-verde'));if(window.resetFiltrosPares){window.resetFiltrosPares();}var su=document.getElementById('selUnosN1');if(su){su.value='';su.classList.remove('activo');}}
 </script>
 <script>
 (function(){
