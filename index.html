@@ -157,15 +157,10 @@ function toggleUltimosResultados() {
         <label>Mín. Atraso:</label><input type="number" id="minDistanciaPares" value="0">
         <button class="btn-aplicar" onclick="renderPares()">Buscar</button>
       </div>
-      <div class="pares-ver">
-        <span id="etqParesVer"></span>
-        <label><input type="checkbox" id="chkParesTotales" checked> <span id="etqParesTotales"></span></label>
-        <label><input type="checkbox" id="chkParesDetalle"> <span id="etqParesDetalle"></span></label>
-      </div>
       <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
-          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1" disabled></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2" disabled></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
     <div class="stats-card">
@@ -200,11 +195,11 @@ function toggleUltimosResultados() {
 .pares-ver label{display:flex;align-items:center;gap:6px;}
 .th-filtro{padding:4px 3px !important;}
 .sel-enc{position:relative;display:block;}
-.sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:6px 14px 6px 4px;font-family:inherit;font-size:inherit;font-weight:700;border:1px solid transparent;border-radius:6px;background:transparent;color:#fff;text-align:center;text-align-last:center;cursor:pointer;}
+.sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:6px 17px 6px 5px;font-family:inherit;font-size:inherit;font-weight:700;border:1px solid transparent;border-radius:6px;background:transparent;color:#fff;text-align:center;text-align-last:center;cursor:pointer;}
 .sel-enc select.activo{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.7);}
 .sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
 .sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
-.sel-enc::after{content:'▾';position:absolute;right:3px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
+.sel-enc::after{content:'▾';position:absolute;right:5px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
@@ -371,9 +366,6 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   }
 
   function etiquetasFiltrosPares(){
-    if (elp('etqParesVer')) elp('etqParesVer').textContent = TP.ver;
-    if (elp('etqParesTotales')) elp('etqParesTotales').textContent = TP.totales;
-    if (elp('etqParesDetalle')) elp('etqParesDetalle').textContent = TP.detalle;
     const p1 = [], p2 = [];
     for (let i = 1; i < NUM_POS_SORTEO; i++) p1.push(i);
     for (let i = 2; i <= NUM_POS_SORTEO; i++) p2.push(i);
@@ -391,16 +383,6 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     llenarSelect('selParesN2', ordenar(n2), true);
   }
 
-  function actualizarMenusPosicion(){
-    const detalle = elp('chkParesDetalle') && elp('chkParesDetalle').checked;
-    ['selParesP1', 'selParesP2'].forEach(id => {
-      const s = elp(id);
-      if (!s) return;
-      if (!detalle) s.value = '';
-      s.disabled = !detalle;
-    });
-  }
-
   function valorFiltro(id){ const s = elp(id); return s ? s.value : ''; }
 
   function renderPares(){
@@ -410,8 +392,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     const minDist = parseInt(elp('minDistanciaPares').value) || 0;
     const f1 = valorFiltro('selParesN1'), f2 = valorFiltro('selParesN2');
     const g1 = valorFiltro('selParesP1'), g2 = valorFiltro('selParesP2');
-    const verTotales = elp('chkParesTotales').checked;
-    const verDetalle = elp('chkParesDetalle').checked;
+    const verTotales = true, verDetalle = true;   // sin restricción: generales y por posición juntos
     ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => {
       const s = elp(id);
       if (s) s.classList.toggle('activo', s.value !== '');   // resalta el encabezado que tiene un filtro puesto
@@ -450,9 +431,6 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     if (mt) mt.value = mt.defaultValue;
     if (md) md.value = md.defaultValue;
     ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => { const s = elp(id); if (s) s.value = ''; });
-    if (elp('chkParesTotales')) elp('chkParesTotales').checked = true;
-    if (elp('chkParesDetalle')) elp('chkParesDetalle').checked = false;
-    actualizarMenusPosicion();
     renderPares();
   };
 
@@ -479,13 +457,6 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   }
 
   function conectarEventosFiltrosPares(){
-    const chkTot = elp('chkParesTotales'), chkDet = elp('chkParesDetalle');
-    if (chkTot) chkTot.addEventListener('change', renderPares);
-    if (chkDet) chkDet.addEventListener('change', async function(){
-      actualizarMenusPosicion();
-      if (chkDet.checked) await cargarParesDetalle();
-      renderPares();
-    });
     ['selParesN1', 'selParesN2', 'selParesP1', 'selParesP2'].forEach(id => {
       const s = elp(id);
       if (s) s.addEventListener('change', renderPares);
@@ -498,6 +469,8 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
 
   etiquetasFiltrosPares();
   conectarEventosFiltrosPares();
+  // El detalle por posición se baja en segundo plano (queda en caché) y se suma a la tabla al llegar.
+  window.cargarDetalleEnSegundoPlano = async function(){ await cargarParesDetalle(); renderPares(); };
 
   let atrasoMapGlobal = {};
   let terciasCargadas = false;
@@ -525,6 +498,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         paresGeneral = paresCache;
         iniciarMenusNumerosPares();
         renderPares();
+        setTimeout(window.cargarDetalleEnSegundoPlano, 1500);
         return;
       }
     }
@@ -547,6 +521,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         guardarDB('paresDet', null);
         guardarDB('tercias', null);
       }
+      setTimeout(window.cargarDetalleEnSegundoPlano, 1500);
     } catch (e) {
       console.error('No se pudieron cargar las tablas', e);
       if (tbodyUnos) tbodyUnos.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ef4444;">'+TEXTO_ERROR+'</td></tr>';
