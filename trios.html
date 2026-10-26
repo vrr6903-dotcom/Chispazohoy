@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trios más atrasados | Chispazo</title>
+<title>Tríos más atrasados | Chispazo</title>
 <meta name="description" content="Trios (tercias) de Chispazo que más sorteos llevan sin salir, con filtros por número y posición. Información sin validez oficial.">
 <link rel="canonical" href="https://www.resultadoschispazohoy.com/trios.html">
 <link rel="stylesheet" href="estilos.css">
@@ -52,12 +52,36 @@
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
-  <a class="tab-btn-estadisticas activo" href="trios.html">🧩 Trios</a>
+  <a class="tab-btn-estadisticas activo" href="trios.html">🧩 Tríos</a>
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
+<style>
+.ayuda-pestana { margin:0 0 16px; }
+.ayuda-pestana > summary { display:inline-flex; align-items:center; gap:6px; cursor:pointer; list-style:none; padding:8px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:20px; color:#1d4ed8; font-weight:600; font-size:0.9rem; user-select:none; }
+.ayuda-pestana > summary::-webkit-details-marker { display:none; }
+.ayuda-pestana > summary::after { content:'\25BE'; font-size:0.8rem; transition:transform 0.15s; }
+.ayuda-pestana[open] > summary::after { transform:rotate(180deg); }
+.ayuda-contenido { margin-top:10px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; font-size:0.9rem; line-height:1.55; color:#334155; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.ayuda-contenido ul { margin:0; padding-left:20px; }
+.ayuda-contenido li { margin:6px 0; }
+.ayuda-aviso { margin:10px 0 0; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#64748b; }
+</style>
+<details class="ayuda-pestana" id="ayudaPestana" data-pestana="5">
+  <summary>💡 ¿Cómo usar esta pestaña?</summary>
+  <div class="ayuda-contenido">
+    <ul>
+      <li>Una <b>tercia</b> son 3 números que salieron juntos en un mismo sorteo. El <b>atraso</b> es cuántos concursos lleva esa tercia sin volver a salir junta; <b>Total</b>, cuántas veces ha salido.</li>
+      <li>Los encabezados <b>N1, N2, N3 y P1, P2, P3</b> son menús: tócalos para filtrar por número o por posición. Si las tres P valen 0, la tercia se cuenta en cualquier posición.</li>
+      <li>Escribe un valor en <b>Mín. Totales</b> o <b>Mín. Atraso</b> y toca <b>Buscar</b>. Se muestran como máximo 500 filas.</li>
+      <li><b>⭐ Guardar</b> agrega la tercia a tu pestaña Seguimiento y <b>🔍 Buscar</b> te muestra cuándo ha salido antes.</li>
+    </ul>
+    <p class="ayuda-aviso">Son datos históricos. Cada sorteo es independiente: que algo lleve muchos concursos sin salir no significa que vaya a salir pronto.</p>
+  </div>
+</details>
+<script>(function(){var d=document.getElementById('ayudaPestana');if(!d)return;try{var k='ayudaVista_'+d.getAttribute('data-pestana');if(true&&!localStorage.getItem(k)){d.open=true;localStorage.setItem(k,'1');}}catch(e){}})();</script>
     <div class="stats-card">
       <div class="stats-title" id="tituloTercias"><span>🧩 Combinaciones de tres números: Frecuencia > 25</span></div>
       <div class="filter-bar">

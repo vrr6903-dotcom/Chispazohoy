@@ -52,12 +52,37 @@
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
-  <a class="tab-btn-estadisticas" href="trios.html">🧩 Trios</a>
+  <a class="tab-btn-estadisticas" href="trios.html">🧩 Tríos</a>
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas activo" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
+<style>
+.ayuda-pestana { margin:0 0 16px; }
+.ayuda-pestana > summary { display:inline-flex; align-items:center; gap:6px; cursor:pointer; list-style:none; padding:8px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:20px; color:#1d4ed8; font-weight:600; font-size:0.9rem; user-select:none; }
+.ayuda-pestana > summary::-webkit-details-marker { display:none; }
+.ayuda-pestana > summary::after { content:'\25BE'; font-size:0.8rem; transition:transform 0.15s; }
+.ayuda-pestana[open] > summary::after { transform:rotate(180deg); }
+.ayuda-contenido { margin-top:10px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; font-size:0.9rem; line-height:1.55; color:#334155; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.ayuda-contenido ul { margin:0; padding-left:20px; }
+.ayuda-contenido li { margin:6px 0; }
+.ayuda-aviso { margin:10px 0 0; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#64748b; }
+</style>
+<details class="ayuda-pestana" id="ayudaPestana" data-pestana="3">
+  <summary>💡 ¿Cómo usar esta pestaña?</summary>
+  <div class="ayuda-contenido">
+    <ul>
+      <li>Los números en <b>dorado</b> son los recomendados por el sitio (según pares confirmados y atraso individual); los que eliges tú aparecen en <b>azul</b>.</li>
+      <li>Toca una esfera para agregarla o quitarla; puedes dejar entre 12 a 14 números. <b>Usar recomendados</b> vuelve a la propuesta inicial y <b>Limpiar selección</b> empieza de cero.</li>
+      <li>Con al menos 5 números verás las combinaciones sugeridas. Elige cuántas quieres (10, 20, 50 o 100): se arman sin repetir y reparten tus números de forma pareja.</li>
+      <li>La línea de cobertura dice cuántas tercias de tus números quedan cubiertas: si en un sorteo salen 3 de tus números, esos tres aparecen juntos en alguna de tus combinaciones.</li>
+      <li>Puedes copiarlas, descargarlas en CSV o compartirlas por WhatsApp (a WhatsApp se envían las primeras 20).</li>
+      <li>Son una forma de organizar tus números, no una predicción: todas las combinaciones tienen la misma probabilidad.</li>
+    </ul>
+  </div>
+</details>
+<script>(function(){var d=document.getElementById('ayudaPestana');if(!d)return;try{var k='ayudaVista_'+d.getAttribute('data-pestana');if(true&&!localStorage.getItem(k)){d.open=true;localStorage.setItem(k,'1');}}catch(e){}})();</script>
 <div class="buscar-historial-caja">
   <p style="margin-top:0; color:#64748b; font-size:0.9rem;">Combina el número, el par y la tercia más atrasados del historial para armar una combinación de 5. Es un ejercicio estadístico sobre atrasos históricos, <strong>no una predicción de resultados</strong>.</p>
 </div>

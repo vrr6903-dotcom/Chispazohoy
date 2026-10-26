@@ -52,12 +52,36 @@
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
-  <a class="tab-btn-estadisticas" href="trios.html">🧩 Trios</a>
+  <a class="tab-btn-estadisticas" href="trios.html">🧩 Tríos</a>
   <a class="tab-btn-estadisticas activo" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
+<style>
+.ayuda-pestana { margin:0 0 16px; }
+.ayuda-pestana > summary { display:inline-flex; align-items:center; gap:6px; cursor:pointer; list-style:none; padding:8px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:20px; color:#1d4ed8; font-weight:600; font-size:0.9rem; user-select:none; }
+.ayuda-pestana > summary::-webkit-details-marker { display:none; }
+.ayuda-pestana > summary::after { content:'\25BE'; font-size:0.8rem; transition:transform 0.15s; }
+.ayuda-pestana[open] > summary::after { transform:rotate(180deg); }
+.ayuda-contenido { margin-top:10px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; font-size:0.9rem; line-height:1.55; color:#334155; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.ayuda-contenido ul { margin:0; padding-left:20px; }
+.ayuda-contenido li { margin:6px 0; }
+.ayuda-aviso { margin:10px 0 0; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#64748b; }
+</style>
+<details class="ayuda-pestana" id="ayudaPestana" data-pestana="1">
+  <summary>💡 ¿Cómo usar esta pestaña?</summary>
+  <div class="ayuda-contenido">
+    <ul>
+      <li>Escribe de 1 a 5 números del 1 al 28, separados por un espacio o una coma, y toca <b>Buscar</b>.</li>
+      <li>Verás los concursos en los que salieron juntos, del más reciente al más antiguo (hasta 500), con tus números marcados en verde.</li>
+      <li>También aparece una gráfica con cuántas veces salieron juntos en cada año.</li>
+      <li>Los botones <b>Buscar</b> de las otras pestañas te traen aquí con los números ya escritos.</li>
+      <li>Debajo del buscador puedes descargar el historial completo.</li>
+    </ul>
+  </div>
+</details>
+<script>(function(){var d=document.getElementById('ayudaPestana');if(!d)return;try{var k='ayudaVista_'+d.getAttribute('data-pestana');if(true&&!localStorage.getItem(k)){d.open=true;localStorage.setItem(k,'1');}}catch(e){}})();</script>
 <div class="buscar-historial-caja">
   <div class="buscar-historial-controles">
     <label for="inputBuscarNumeros">Escribe tus números para ver dónde han salido:</label>

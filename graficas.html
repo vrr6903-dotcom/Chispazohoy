@@ -52,12 +52,36 @@
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
-  <a class="tab-btn-estadisticas" href="trios.html">🧩 Trios</a>
+  <a class="tab-btn-estadisticas" href="trios.html">🧩 Tríos</a>
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas activo" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
+<style>
+.ayuda-pestana { margin:0 0 16px; }
+.ayuda-pestana > summary { display:inline-flex; align-items:center; gap:6px; cursor:pointer; list-style:none; padding:8px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:20px; color:#1d4ed8; font-weight:600; font-size:0.9rem; user-select:none; }
+.ayuda-pestana > summary::-webkit-details-marker { display:none; }
+.ayuda-pestana > summary::after { content:'\25BE'; font-size:0.8rem; transition:transform 0.15s; }
+.ayuda-pestana[open] > summary::after { transform:rotate(180deg); }
+.ayuda-contenido { margin-top:10px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; font-size:0.9rem; line-height:1.55; color:#334155; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.ayuda-contenido ul { margin:0; padding-left:20px; }
+.ayuda-contenido li { margin:6px 0; }
+.ayuda-aviso { margin:10px 0 0; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#64748b; }
+</style>
+<details class="ayuda-pestana" id="ayudaPestana" data-pestana="2">
+  <summary>💡 ¿Cómo usar esta pestaña?</summary>
+  <div class="ayuda-contenido">
+    <ul>
+      <li>Escribe 1, 2 o 3 números y toca el botón para ver cuántos concursos lleva cada uno sin salir.</li>
+      <li>Con 2 o 3 números también verás cuánto lleva ese par o esa tercia sin salir junta.</li>
+      <li>Colores: <b>verde</b> hasta 10 concursos de atraso, <b>naranja</b> hasta 20 y <b>rojo</b> más de 20. Un 0 significa que salió en el último concurso.</li>
+      <li>En <b>Pares más atrasados</b>, toca los pares que te interesen (hasta 14 números en total) y llévalos a la pestaña Genera tus combinaciones. El número gris es el atraso de cada par.</li>
+    </ul>
+    <p class="ayuda-aviso">Son datos históricos. Cada sorteo es independiente: que algo lleve muchos concursos sin salir no significa que vaya a salir pronto.</p>
+  </div>
+</details>
+<script>(function(){var d=document.getElementById('ayudaPestana');if(!d)return;try{var k='ayudaVista_'+d.getAttribute('data-pestana');if(true&&!localStorage.getItem(k)){d.open=true;localStorage.setItem(k,'1');}}catch(e){}})();</script>
 <div class="buscar-historial-caja">
   <div class="buscar-historial-controles">
     <label for="inputGraficaNumeros">Busca un número, par o tercia para ver su atraso:</label>
@@ -211,9 +235,9 @@ async function buscarGraficaAtraso() {
     seleccionados: 'Selected', usar: '\u27a1\ufe0f Use in Generate combinations', limpiar: 'Clear selection',
     limite: 'You can take up to ' + MAX_SEL_GPA + ' numbers to Generate combinations.'
   } : {
-    intro: 'Toca los pares que te interesen y llevalos a Generar combinaciones. El número gris es cuántos concursos lleva ese par sin salir.',
-    seleccionados: 'Seleccionados', usar: '\u27a1\ufe0f Usar en Generar combinaciones', limpiar: 'Limpiar seleccion',
-    limite: 'Puedes llevar hasta ' + MAX_SEL_GPA + ' numeros a Generar combinaciones.'
+    intro: 'Toca los pares que te interesen y llévalos a Generar combinaciones. El número gris es cuántos concursos lleva ese par sin salir.',
+    seleccionados: 'Seleccionados', usar: '\u27a1\ufe0f Usar en Generar combinaciones', limpiar: 'Limpiar selección',
+    limite: 'Puedes llevar hasta ' + MAX_SEL_GPA + ' números a Generar combinaciones.'
   };
   document.getElementById('gpaIntro').textContent = T.intro;
   document.getElementById('gpaEtqSel').textContent = T.seleccionados;

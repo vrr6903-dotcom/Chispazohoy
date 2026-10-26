@@ -51,12 +51,35 @@
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
-  <a class="tab-btn-estadisticas" href="trios.html">🧩 Trios</a>
+  <a class="tab-btn-estadisticas" href="trios.html">🧩 Tríos</a>
   <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas activo" href="seguimiento.html">⭐ Seguimiento</a>
 </div>
+<style>
+.ayuda-pestana { margin:0 0 16px; }
+.ayuda-pestana > summary { display:inline-flex; align-items:center; gap:6px; cursor:pointer; list-style:none; padding:8px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:20px; color:#1d4ed8; font-weight:600; font-size:0.9rem; user-select:none; }
+.ayuda-pestana > summary::-webkit-details-marker { display:none; }
+.ayuda-pestana > summary::after { content:'\25BE'; font-size:0.8rem; transition:transform 0.15s; }
+.ayuda-pestana[open] > summary::after { transform:rotate(180deg); }
+.ayuda-contenido { margin-top:10px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 18px; font-size:0.9rem; line-height:1.55; color:#334155; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.ayuda-contenido ul { margin:0; padding-left:20px; }
+.ayuda-contenido li { margin:6px 0; }
+.ayuda-aviso { margin:10px 0 0; padding-top:10px; border-top:1px solid #e2e8f0; font-size:0.8rem; color:#64748b; }
+</style>
+<details class="ayuda-pestana" id="ayudaPestana" data-pestana="4">
+  <summary>💡 ¿Cómo usar esta pestaña?</summary>
+  <div class="ayuda-contenido">
+    <ul>
+      <li>Guarda pares y tercias desde las pestañas <b>Números</b> y <b>Tríos</b> con el botón <b>⭐ Guardar</b>, o escribe los tuyos arriba (2 o 3 números).</li>
+      <li>Cada tarjeta muestra desde qué concurso lo sigues, cuántos sorteos han pasado, si ha salido y su atraso actual.</li>
+      <li>Con <b>➡️ Usar</b> llevas esos números a la pestaña Genera tus combinaciones; con <b>Borrar</b> lo quitas de tu lista.</li>
+      <li>Puedes guardar hasta 15. Se guardan solo en este navegador y en este dispositivo: si borras los datos del navegador, se pierden.</li>
+    </ul>
+  </div>
+</details>
+<script>(function(){var d=document.getElementById('ayudaPestana');if(!d)return;try{var k='ayudaVista_'+d.getAttribute('data-pestana');if(true&&!localStorage.getItem(k)){d.open=true;localStorage.setItem(k,'1');}}catch(e){}})();</script>
 <style>
 .seg-card { display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between; background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; margin-bottom:10px; }
 .seg-nums { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
@@ -94,7 +117,7 @@
   var T = EN ? {
     titulo: '⭐ My tracking',
     aviso: 'Personal record of gaps. Every draw is independent: a pair or triplet that has gone many draws without hitting is not more likely to hit soon.',
-    vacio: 'You are not tracking anything yet. Go to the Numbers tab and press Save on a pair or triplet.',
+    vacio: 'You are not tracking anything yet. Go to the Numbers or Trios tab and press Save on a pair or triplet.',
     guardadas: 'Saved: ', par: 'Pair', tercia: 'Triplet',
     desde: 'Tracked since draw ', transcurridos: 'draw since then', transcurridosPl: 'draws since then',
     salio: 'Hit {n} time(s) since you started tracking: ', noSalio: 'Has not hit since you started tracking.',
@@ -106,7 +129,7 @@
   } : {
     titulo: '⭐ Mi seguimiento',
     aviso: 'Registro personal de atraso. Cada sorteo es independiente: que un par o una tercia lleve muchos sorteos sin salir no significa que vaya a salir pronto.',
-    vacio: 'Aún no sigues ninguna combinación. Ve a la pestaña Números y pulsa Guardar en un par o una tercia.',
+    vacio: 'Aún no sigues ninguna combinación. Ve a la pestaña Números o Tríos y pulsa Guardar en un par o una tercia.',
     guardadas: 'Guardadas: ', par: 'Par', tercia: 'Tercia',
     desde: 'Lo sigues desde el concurso ', transcurridos: 'sorteo transcurrido', transcurridosPl: 'sorteos transcurridos',
     salio: 'Salió {n} vez/veces desde que lo sigues: ', noSalio: 'No ha salido desde que lo sigues.',
