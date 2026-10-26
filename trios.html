@@ -53,7 +53,7 @@
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas" href="index.html">📊 Números</a>
   <a class="tab-btn-estadisticas activo" href="trios.html">🧩 Tríos</a>
-  <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
+  <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus números</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
@@ -92,7 +92,7 @@
       <div class="pares-estado" id="estadoTercias"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaTercias">
-          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selTerN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerN3" data-etq="N3" title="N3"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP2" data-etq="P2" title="P2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP3" data-etq="P3" title="P3"></select></div></th><th>Total</th><th>Fecha</th><th>Concurso</th><th>Atraso</th><th>Gráfica</th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selTerN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerN3" data-etq="N3" title="N3"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP2" data-etq="P2" title="P2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selTerP3" data-etq="P3" title="P3"></select></div></th><th>Total</th><th>Fecha</th><th>Concurso</th><th>Atraso</th><th>Acciones</th></tr></thead>
           <tbody id="tbodyTercias"></tbody>
         </table>
       </div>
@@ -102,7 +102,7 @@
 </main>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
-  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Nacional (México).</span>
+  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería Nacional.</span>
 </div>
 <style>
 .btn-grafica{display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;cursor:pointer;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap;animation:pulso-grafica 2.2s ease-in-out infinite;}
@@ -112,14 +112,14 @@
 .btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
 .pares-ver{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;font-size:0.9rem;color:#334155;}
 .pares-ver label{display:flex;align-items:center;gap:6px;}
-.th-filtro{padding:4px 3px !important;}
+.th-filtro{padding:4px 3px !important;min-width:48px;}
 .sel-enc{position:relative;display:block;}
 .sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:6px 17px 6px 5px;font-family:inherit;font-size:inherit;font-weight:700;border:1px solid transparent;border-radius:6px;background:transparent;color:#fff;text-align:center;text-align-last:center;cursor:pointer;}
 .sel-enc select.activo{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.7);}
 .sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
 .sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
 .sel-enc::after{content:'▾';position:absolute;right:5px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
-@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
+@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;min-width:34px;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>

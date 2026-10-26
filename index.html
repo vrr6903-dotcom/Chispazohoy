@@ -123,7 +123,7 @@ function toggleUltimosResultados() {
 <div class="tabs-estadisticas">
   <a class="tab-btn-estadisticas activo" href="index.html">📊 Números</a>
   <a class="tab-btn-estadisticas" href="trios.html">🧩 Tríos</a>
-  <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus numeros</a>
+  <a class="tab-btn-estadisticas" href="buscar.html">🔍 Busca tus números</a>
   <a class="tab-btn-estadisticas" href="graficas.html">📈 Gráficas</a>
   <a class="tab-btn-estadisticas" href="generador.html">🎲 Genera tus combinaciones</a>
   <a class="tab-btn-estadisticas" href="seguimiento.html">⭐ Seguimiento</a>
@@ -159,11 +159,11 @@ function toggleUltimosResultados() {
       <div class="stats-title"><span>📊 Frecuencia y Atrasos: Números Individuales</span> <button class="btn-reset-filtro" onclick="limpiarFiltrosCruzados()">Ver Todos</button></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaUnos">
-          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selUnosN1" data-etq="N1" title="N1"></select></div></th><th>Total</th><th>Última fecha</th><th>Concurso</th><th>Atraso</th><th>Gráfica</th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selUnosN1" data-etq="N1" title="N1"></select></div></th><th>Total</th><th>Última fecha</th><th>Concurso</th><th>Atraso</th><th>Acciones</th></tr></thead>
           <tbody id="tbodyUnos"></tbody>
         </table></div></div>
     <div class="stats-card">
-      <div class="stats-title" id="tituloPares">🔗 Combinaciones de dos números: Frecuencia > 35 &nbsp;<span style="display:inline-flex; align-items:center; cursor:help; position:relative; padding:2px 8px; background:#eff6ff; border-radius:12px; border:1px solid #bfdbfe; color:#1d4ed8; font-size:12px; font-weight:normal;">ℹ️  <span style="display:none; position:absolute; left:0; top:100%; margin-top:6px; width:280px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); z-index:100; font-size:12px; line-height:1.5; color:#374151;">    P1/P2 = Posición<br>Total = veces juntos<br>Atraso =sorteos sin aparecer juntos  </span></span></div>
+      <div class="stats-title" id="tituloPares"><span>🔗 Combinaciones de dos números: Frecuencia > 35</span></div>
       <div class="filter-bar">
         <label>Mín. Totales:</label><input type="number" id="minTotalesPares" value="35">
         <label>Mín. Atraso:</label><input type="number" id="minDistanciaPares" value="0">
@@ -172,7 +172,7 @@ function toggleUltimosResultados() {
       <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
-          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Gráfica</th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Acciones</th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
 </div>
@@ -188,14 +188,14 @@ function toggleUltimosResultados() {
 .btn-seguir:hover{background:#f59e0b;color:#fff;border-color:#f59e0b;}
 .pares-ver{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;font-size:0.9rem;color:#334155;}
 .pares-ver label{display:flex;align-items:center;gap:6px;}
-.th-filtro{padding:4px 3px !important;}
+.th-filtro{padding:4px 3px !important;min-width:48px;}
 .sel-enc{position:relative;display:block;}
 .sel-enc select{-webkit-appearance:none;appearance:none;width:100%;min-width:0;padding:6px 17px 6px 5px;font-family:inherit;font-size:inherit;font-weight:700;border:1px solid transparent;border-radius:6px;background:transparent;color:#fff;text-align:center;text-align-last:center;cursor:pointer;}
 .sel-enc select.activo{background:rgba(255,255,255,0.22);border-color:rgba(255,255,255,0.7);}
 .sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
 .sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
 .sel-enc::after{content:'▾';position:absolute;right:5px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
-@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
+@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;min-width:34px;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
@@ -576,7 +576,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
 </script>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
-  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería de Nacional (México).</span>
+  <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería Nacional.</span>
 </div>
   <aside class="aside-left">
   </aside>
