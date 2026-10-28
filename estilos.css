@@ -542,10 +542,16 @@ body {
 /* =============================================
    RESPONSIVE / MÓVIL
    ============================================= */
-@media (min-width: 1024px) {
+/* Escritorio ancho: 3 columnas. La izquierda mide 332px para que quepa el banner de Adsterra de
+   300px: 332 = 300 (banner) + 2x15 (padding del cuadro) + 2x1 (borde). La derecha mide 200px porque
+   su banner es de 160px: 200 >= 160 + 2x15 + 2x1 = 192. (Si algun dia el banner derecho vuelve a
+   ser de 300px, cambia 200px por 332px.)
+   Con menos de 1200px de ancho ya no hay espacio para 2 columnas de 332px junto al contenido,
+   asi que la pagina se apila en una sola columna (como en celular). */
+@media (min-width: 1200px) {
     .main-container {
         display: grid;
-        grid-template-columns: 300px 1fr 300px;
+        grid-template-columns: 332px minmax(0, 1fr) 200px;
         align-items: start;
         gap: 25px;
     }
@@ -555,6 +561,24 @@ body {
         display: flex;
         flex-direction: column;
         gap: 15px;
+    }
+    .aside-left .widget-publicidad,
+    .aside-right .widget-publicidad {
+        padding: 14px 15px;
+        margin-top: 0;
+    }
+}
+
+/* Tablet / laptop angosta (769px a 1199px): una sola columna, anuncio centrado. */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .aside-left, .aside-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .widget-publicidad {
+        width: 100%;
+        max-width: 340px;
     }
 }
 
@@ -592,5 +616,11 @@ body {
         font-size: 0.65em;
         margin-left: 3px;
         opacity: 0.55;
+    }
+}
+
+@media (max-width: 360px) {
+    .widget-publicidad {
+        padding: 4px;
     }
 }
