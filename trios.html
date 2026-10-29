@@ -113,6 +113,21 @@
     </script>
   </aside>
 </main>
+<script>
+(function () {
+  var opciones = null, src = null;
+  if (window.matchMedia('(min-width: 800px)').matches) {
+    opciones = 'atOptions = {\'key\':\'a0b6213d54e1ac8a493d8506d625831d\',\'format\':\'iframe\',\'height\':90,\'width\':728,\'params\':{}};'; src = 'https://bauval.org/22/a0b6213d54e1ac8a493d8506d625831d';
+  } else {
+    opciones = 'atOptions = {\'key\':\'d6d10150b8e6983d70c9ab5ff4f276a3\',\'format\':\'iframe\',\'height\':50,\'width\':320,\'params\':{}};'; src = 'https://bauval.org/22/d6d10150b8e6983d70c9ab5ff4f276a3';
+  }
+  if (!opciones) return;
+  document.write('<div style="text-align:center; margin:24px auto 0;">');
+  document.write('<scr' + 'ipt>' + opciones + '</scr' + 'ipt>');
+  document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+  document.write('</div>');
+})();
+</script>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
   <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería Nacional.</span>

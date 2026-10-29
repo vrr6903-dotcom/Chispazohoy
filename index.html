@@ -51,37 +51,39 @@
   <div id="contenidoUltimosResultados">
     <div class="section-header">
       <h1 class="section-title">Últimos Resultados Chispazo</h1>
-      <span class="fecha-badge">📅 28/10/2026</span>
+      <span class="fecha-badge">📅 29/10/2026</span>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-clasico">Clásico</span>
-        <a href="concurso-12340.html" style="text-decoration:none;">        <span class="concurso-num">#12340</span></a>
+        <a href="concurso-12340.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12340</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">01</div>
           <div class="esfera-sm">06</div>
           <div class="esfera-sm">13</div>
           <div class="esfera-sm">17</div>
           <div class="esfera-sm">23</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">28/10/2026</span>
       </div>
       <a class="btn-premios" href="premios_clasico.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-tres">De las tres</span>
-        <a href="concurso-12339.html" style="text-decoration:none;">        <span class="concurso-num">#12339</span></a>
+        <a href="concurso-12339.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12339</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">05</div>
           <div class="esfera-sm">12</div>
           <div class="esfera-sm">15</div>
           <div class="esfera-sm">25</div>
           <div class="esfera-sm">27</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">28/10/2026</span>
       </div>
       <a class="btn-premios" href="premios_tres.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
@@ -598,6 +600,21 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   <a href='numeros-atrasados.html' style='color:#2563eb; font-weight:600; text-decoration:none;'>⏳ Números, pares y tríos atrasados</a>
   <a href='concursos.html' style='color:#2563eb; font-weight:600; text-decoration:none;'>📋 Ver todos los concursos</a>
 </div>
+<script>
+(function () {
+  var opciones = null, src = null;
+  if (window.matchMedia('(min-width: 800px)').matches) {
+    opciones = 'atOptions = {\'key\':\'a0b6213d54e1ac8a493d8506d625831d\',\'format\':\'iframe\',\'height\':90,\'width\':728,\'params\':{}};'; src = 'https://bauval.org/22/a0b6213d54e1ac8a493d8506d625831d';
+  } else {
+    opciones = 'atOptions = {\'key\':\'d6d10150b8e6983d70c9ab5ff4f276a3\',\'format\':\'iframe\',\'height\':50,\'width\':320,\'params\':{}};'; src = 'https://bauval.org/22/d6d10150b8e6983d70c9ab5ff4f276a3';
+  }
+  if (!opciones) return;
+  document.write('<div style="text-align:center; margin:24px auto 0;">');
+  document.write('<scr' + 'ipt>' + opciones + '</scr' + 'ipt>');
+  document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+  document.write('</div>');
+})();
+</script>
 <div style='text-align:center; font-size:1.1rem; font-weight:bold; color:#1e293b; padding:1rem; margin-top:2rem; border-top:1px solid #e2e8f0;'>
   ⚖️ Estadísticas como apoyo, tú decides tus números.<br>
   <span style='font-size:0.9rem; font-weight:normal; color:#475569;'>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería Nacional.</span>
