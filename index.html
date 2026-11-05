@@ -2,11 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="monetag" content="eec91ac9bdbd4da25370d19db66e89f6">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TZTrh5zrupJ4kjF8qSpYQDW1JS8f9c_p7C4UO2Pzcwk">
 <title>Resultados Chispazo de las tres y Clásico hoy #12354</title>
-<meta name="description" content="Resultados del Chispazo de las tres y Clásico de hoy, miércoles 4 de noviembre de 2026: números ganadores, premios y estadísticas interactivas de atraso, pares y tríos. Información sin validez oficial.">
+<meta name="description" content="Resultados del Chispazo de las tres y Clásico de hoy, jueves 5 de noviembre de 2026: números ganadores, premios y estadísticas interactivas de atraso, pares y tríos. Información sin validez oficial.">
 <link rel="canonical" href="https://www.resultadoschispazohoy.com/">
 <link rel="stylesheet" href="estilos.css">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -25,7 +24,8 @@
 <body>
 <header class="header-bar">
   <div class="header-brand">⚡ Resultados Chispazo<a href="manual.html" style="margin-left:14px; background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.4); padding:6px 14px; border-radius:18px; font-size:0.9rem; font-weight:600; text-decoration:none; white-space:nowrap;">📖 Manual</a></div>
-  <nav class="nav-menu">
+  <nav class="nav-menu" style="flex-wrap:wrap;gap:8px;justify-content:flex-end">
+    <a class="btn-glow" href="https://www.fantasy5florida.online" target="_blank" rel="noopener">🎰 Florida Fantasy 5 en espanol</a>
   </nav>
 </header>
 <main class="main-container">
@@ -42,37 +42,39 @@
   <div id="contenidoUltimosResultados">
     <div class="section-header">
       <h1 class="section-title">Resultados Chispazo de las tres y Clásico de hoy</h1>
-      <span class="fecha-badge">📅 04/11/2026</span>
+      <span class="fecha-badge">📅 05/11/2026</span>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-clasico">Clásico</span>
-        <a href="concurso-12354.html" style="text-decoration:none;">        <span class="concurso-num">#12354</span></a>
+        <a href="concurso-12354.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12354</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">05</div>
           <div class="esfera-sm">09</div>
           <div class="esfera-sm">10</div>
           <div class="esfera-sm">16</div>
           <div class="esfera-sm">27</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">04/11/2026</span>
       </div>
       <a class="btn-premios" href="premios_clasico.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-tres">De las tres</span>
-        <a href="concurso-12353.html" style="text-decoration:none;">        <span class="concurso-num">#12353</span></a>
+        <a href="concurso-12353.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12353</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">02</div>
           <div class="esfera-sm">04</div>
           <div class="esfera-sm">06</div>
           <div class="esfera-sm">19</div>
           <div class="esfera-sm">24</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">04/11/2026</span>
       </div>
       <a class="btn-premios" href="premios_tres.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
@@ -102,6 +104,32 @@ function toggleUltimosResultados() {
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "ylfy15h8rn");
+</script>
+<script>
+(function(){
+  var m=location.search.match(/[?&]c=(\d{3,7})/); if(!m) return;
+  var c=m[1];
+  function z(n){return (n<10?'0':'')+n;}
+  fetch('concursos-recientes.json').then(function(r){return r.json();}).then(function(d){
+    var x=d[c]; if(!x) return;
+    var cards=document.querySelectorAll('.sorteo-card-compact'); if(!cards.length) return;
+    var card=null;
+    for(var i=0;i<cards.length;i++){var b=cards[i].querySelector('.badge-tipo'); if(b&&b.textContent.trim()===x.t){card=cards[i];break;}}
+    if(!card) card=cards[0];
+    var num=card.querySelector('.concurso-num'); if(num){num.textContent='#'+c; num.style.color='';
+      var a=num.parentNode; if(a&&a.tagName==='A') a.setAttribute('href','concurso-'+c+'.html');}
+    var es=card.querySelectorAll('.esfera-sm'); for(var k=0;k<es.length&&k<x.n.length;k++) es[k].textContent=z(x.n[k]);
+    var cont=card.querySelector('.esferas-container'); if(cont){cont.style.opacity='1';
+      var hijos=cont.parentNode.children; for(var q=hijos.length-1;q>=0;q--){ if(hijos[q].tagName==='SPAN') cont.parentNode.removeChild(hijos[q]); }
+      var f=document.createElement('span'); f.className='fecha-concurso'; f.style.cssText='font-size:0.8rem;font-weight:600;color:#64748b;'; f.textContent=x.f; cont.parentNode.appendChild(f);}
+    var pb=card.querySelector('.btn-premios');
+    if(x.p){ if(pb){pb.setAttribute('href','premios-concurso-'+c+'.html'); pb.style.display='';} }
+    else if(pb){ pb.style.display='none'; }
+    var box=document.createElement('div'); box.style.cssText='background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:8px 12px;margin:0 0 10px;font-size:0.9rem;color:#1e3a8a;text-align:center;';
+    box.innerHTML='Estás viendo el concurso <b>'+c+'</b> ('+x.f+') · <a href="index.html">Ver los de hoy</a>';
+    card.parentNode.insertBefore(box,card.parentNode.querySelector('.sorteo-card-compact'));
+  }).catch(function(){});
+})();
 </script>
 <div class="separador-estadisticas"><span>📊 ESTADÍSTICAS DETALLADAS</span></div>
 <style>
