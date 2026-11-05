@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TZTrh5zrupJ4kjF8qSpYQDW1JS8f9c_p7C4UO2Pzcwk">
-<title>Chispazo 12055 resultados: sorteo Clásico del lunes 8 de junio de 2026</title>
-<meta name="description" content="Resultado del Chispazo Clásico 12055 del lunes 8 de junio de 2026. Entra para ver los números ganadores y los concursos anterior y siguiente. Información sin validez oficial.">
+<title>Chispazo 12055 resultados: sorteo De las tres del lunes 8 de junio de 2026</title>
+<meta name="description" content="Resultado del Chispazo De las tres 12055 del lunes 8 de junio de 2026. Entra para ver los números ganadores y los concursos anterior y siguiente. Información sin validez oficial.">
 <link rel="canonical" href="https://www.resultadoschispazohoy.com/concurso-12055.html">
 <style>
 body{margin:0;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#1e293b;}
@@ -47,8 +47,8 @@ body{margin:0;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',
 <div class="cc-top"><span style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;"><a href="index.html">🎰 Chispazo</a><a href="manual.html">📖 Manual</a></span><a href="concursos.html">Todos los concursos</a></div>
 <div class="cc-wrap">
 <div class="cc-card">
-  <h1>Resultado Chispazo 12055: sorteo Clásico del lunes 8 de junio de 2026</h1>
-  <p class="cc-meta">Concurso 12055 · Clásico · 📅 08/06/2026</p>
+  <h1>Resultado Chispazo 12055: sorteo De las tres del lunes 8 de junio de 2026</h1>
+  <p class="cc-meta">Concurso 12055 · De las tres · 📅 08/06/2026</p>
   <div class="cc-esferas">
     <div class="cc-esfera">02</div>
     <div class="cc-esfera">09</div>
@@ -56,16 +56,48 @@ body{margin:0;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',
     <div class="cc-esfera">23</div>
     <div class="cc-esfera">28</div>
   </div>
-  <p class="cc-texto">El concurso 12055 de Chispazo, sorteo Clásico, se realizó el lunes 8 de junio de 2026 y salieron los números 02, 09, 19, 23, 28.</p>
+  <p class="cc-texto">El concurso 12055 de Chispazo, sorteo De las tres, se realizó el lunes 8 de junio de 2026 y salieron los números 02, 09, 19, 23, 28.</p>
   <div class="cc-nav">
     <span></span>
     <a class="cc-btn" href="concurso-12056.html">Concurso 12056 →</a>
   </div>
   <div class="cc-extra">
-    <a class="cc-btn main" href="index.html">⚡ Chispazo Interactivo</a>
+    <a class="cc-btn main" href="index.html?c=12055" onclick="try{gtag('event','cta_portada',{origen:'concurso_btn',pagina:location.pathname})}catch(e){}">⚡ Chispazo Interactivo</a>
     <a class="cc-btn" href="buscar.html">🔍 Busca tus números</a>
   </div>
 </div>
+<style>
+.hoy-box{background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:16px 14px;margin-top:16px;text-align:center;}
+.hoy-box h2{font-size:1.1rem;margin:0 0 10px;color:#1e293b;}
+.hoy-s{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 4px;border-top:1px solid #f1f5f9;}
+.hoy-s .t{font-size:0.85rem;color:#475569;font-weight:600;}
+.hoy-e{display:flex;gap:6px;}
+.hoy-e span{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;color:#fff;background:radial-gradient(circle at 30% 28%,#fde047,#eab308 65%,#a16207);}
+.hoy-a{margin:10px 0 4px;font-size:0.85rem;color:#475569;}
+.hoy-a b{display:inline-block;margin:3px 4px;padding:3px 8px;background:#f1f5f9;border-radius:999px;color:#1e293b;}
+.hoy-a small{color:#64748b;font-weight:600;}
+.hoy-btn{display:inline-block;margin-top:10px;padding:11px 20px;border-radius:999px;background:#2563eb;color:#fff;font-weight:700;font-size:0.95rem;text-decoration:none;}
+</style>
+<section class="hoy-box" id="hoyBox">
+  <h2>⚡ Chispazo hoy</h2>
+  <div id="hoySorteos"></div>
+  <div class="hoy-a" id="hoyAtrasados" style="display:none"></div>
+  <a class="hoy-btn" href="index.html" onclick="try{gtag('event','cta_portada',{origen:'concurso',pagina:location.pathname})}catch(e){}">Ver estadísticas completas →</a>
+</section>
+<script>
+(function(){
+  function z(n){return (n<10?'0':'')+n;}
+  fetch('ultimos.json').then(function(r){return r.json();}).then(function(d){
+    var s=document.getElementById('hoySorteos'),h='';
+    (d.sorteos||[]).forEach(function(x){
+      h+='<div class="hoy-s"><span class="t">'+x.t+' · Concurso '+x.c+' · '+x.f+'</span><span class="hoy-e">'+x.n.map(function(n){return '<span>'+z(n)+'</span>';}).join('')+'</span></div>';
+    });
+    s.innerHTML=h;
+    var a=document.getElementById('hoyAtrasados');
+    if(d.atrasados&&d.atrasados.length){a.innerHTML='Números más atrasados: '+d.atrasados.map(function(x){return '<b>'+z(x.n)+' <small>'+x.d+'</small></b>';}).join('');a.style.display='';}
+  }).catch(function(){});
+})();
+</script>
 <p class="cc-aviso">⚖️ Estadísticas como apoyo, tú decides tus números.<br>Información sin validez oficial. Consulta siempre los resultados en la página oficial de la Lotería Nacional.<span style="display:block; margin-top:8px; font-size:0.85rem; font-weight:normal;"><a href="acerca.html" style="color:#2563eb;">Acerca de</a> · <a href="privacidad.html" style="color:#2563eb;">Privacidad</a> · <a href="contacto.html" style="color:#2563eb;">Contacto</a></span>
 </p>
 </div>
