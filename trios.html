@@ -224,9 +224,10 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     llenarSelect('selTerN1', ord(a), true);
     llenarSelect('selTerN2', ord(b), true);
     llenarSelect('selTerN3', ord(c), true);
-    llenarSelect('selTerP1', [1,2,3], false);
-    llenarSelect('selTerP2', [2,3,4], false);
-    llenarSelect('selTerP3', [3,4,5], false);
+    llenarSelect('selTerP1', [0,1,2,3], false);   // 0 = en cualquier posición
+    llenarSelect('selTerP2', [0,2,3,4], false);
+    llenarSelect('selTerP3', [0,3,4,5], false);
+    ['selTerP1','selTerP2','selTerP3'].forEach(id => { const s = el(id); if (s) s.title = document.documentElement.lang === 'en' ? '0 = any position' : '0 = en cualquier posición'; });
   }
 
   function pintar(filas){

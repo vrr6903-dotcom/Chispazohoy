@@ -117,6 +117,9 @@ function toggleUltimosResultados() {
     var card=null;
     for(var i=0;i<cards.length;i++){var b=cards[i].querySelector('.badge-tipo'); if(b&&b.textContent.trim()===x.t){card=cards[i];break;}}
     if(!card) card=cards[0];
+    for(var j=0;j<cards.length;j++){ if(cards[j]!==card) cards[j].style.display='none'; }
+    var h1=document.querySelector('h1.section-title'); if(h1) h1.textContent='Resultado Chispazo del concurso '+c;
+    var fb=document.querySelector('.fecha-badge'); if(fb) fb.textContent='\uD83D\uDCC5 '+x.f;
     var num=card.querySelector('.concurso-num'); if(num){num.textContent='#'+c; num.style.color='';
       var a=num.parentNode; if(a&&a.tagName==='A') a.setAttribute('href','concurso-'+c+'.html');}
     var es=card.querySelectorAll('.esfera-sm'); for(var k=0;k<es.length&&k<x.n.length;k++) es[k].textContent=z(x.n[k]);
@@ -413,10 +416,12 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
 
   function etiquetasFiltrosPares(){
     const p1 = [], p2 = [];
+    p1.push(0); p2.push(0);          // 0 = en cualquier posición (filas de Totales)
     for (let i = 1; i < NUM_POS_SORTEO; i++) p1.push(i);
     for (let i = 2; i <= NUM_POS_SORTEO; i++) p2.push(i);
     llenarSelect('selParesP1', p1, false);
     llenarSelect('selParesP2', p2, false);
+    ['selParesP1','selParesP2'].forEach(id => { const s = elp(id); if (s) s.title = EN_PARES ? '0 = any position' : '0 = en cualquier posición'; });
     llenarSelect('selParesN1', [], true);
     llenarSelect('selParesN2', [], true);
   }

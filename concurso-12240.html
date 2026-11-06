@@ -21,6 +21,10 @@ body{margin:0;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',
 .cc-nav{display:flex;justify-content:space-between;gap:8px;margin:18px 0 0;}
 .cc-btn{display:inline-block;padding:10px 16px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-weight:600;font-size:0.9rem;text-decoration:none;}
 .cc-btn.main{background:#2563eb;border-color:#2563eb;color:#fff;}
+.cc-btn.premio{background:#f59e0b;border-color:#d97706;color:#1f2937;font-size:1.05rem;padding:12px 20px;box-shadow:0 2px 6px rgba(217,119,6,0.35);}
+.cc-montos{margin:4px 0 14px;font-weight:700;color:#92400e;font-size:0.98rem;}
+.cc-montos a{color:#1d4ed8;white-space:nowrap;}
+.cc-arriba{margin:6px 0 12px;}
 .cc-extra{margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
 .cc-aviso{text-align:center;font-size:0.8rem;color:#64748b;margin-top:22px;line-height:1.5;}
 .cc-lista{list-style:none;margin:0;padding:0;}
@@ -56,14 +60,14 @@ body{margin:0;background:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',
     <div class="cc-esfera">13</div>
     <div class="cc-esfera">22</div>
   </div>
+  <div class="cc-extra cc-arriba">
+    <a class="cc-btn main" href="index.html?c=12240" onclick="try{gtag('event','cta_portada',{origen:'concurso_btn',pagina:location.pathname})}catch(e){}">⚡ Chispazo Interactivo</a>
+    <a class="cc-btn" href="buscar.html">🔍 Busca tus números</a>
+  </div>
   <p class="cc-texto">El concurso 12240 de Chispazo, sorteo Clásico, se realizó el martes 8 de septiembre de 2026 y salieron los números 09, 11, 12, 13, 22.</p>
   <div class="cc-nav">
     <a class="cc-btn" href="concurso-12239.html">← Concurso 12239</a>
     <a class="cc-btn" href="concurso-12241.html">Concurso 12241 →</a>
-  </div>
-  <div class="cc-extra">
-    <a class="cc-btn main" href="index.html?c=12240" onclick="try{gtag('event','cta_portada',{origen:'concurso_btn',pagina:location.pathname})}catch(e){}">⚡ Chispazo Interactivo</a>
-    <a class="cc-btn" href="buscar.html">🔍 Busca tus números</a>
   </div>
 </div>
 <style>
