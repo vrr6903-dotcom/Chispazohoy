@@ -10987,5 +10987,6 @@
   {"concurso":12355,"fecha":"05/11/2026","sorteo":"De las tres","numeros":[1,3,8,17,23]},
   {"concurso":12356,"fecha":"05/11/2026","sorteo":"Clásico","numeros":[4,13,16,23,25]},
   {"concurso":12357,"fecha":"06/11/2026","sorteo":"De las tres","numeros":[1,2,7,18,23]},
-  {"concurso":12358,"fecha":"06/11/2026","sorteo":"Clásico","numeros":[4,7,12,18,22]}
+  {"concurso":12358,"fecha":"06/11/2026","sorteo":"Clásico","numeros":[4,7,12,18,22]},
+  {"concurso":12359,"fecha":"07/11/2026","sorteo":"De las tres","numeros":[6,9,11,23,27]}
 ]
