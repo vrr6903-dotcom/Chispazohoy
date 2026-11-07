@@ -128,9 +128,10 @@
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
 </style>
 <script>
-function buscarSeleccionHistorial(numerosCsv){
+function buscarSeleccionHistorial(numerosCsv, posCsv){
   try {
     localStorage.setItem('buscarHistorialNumeros', numerosCsv.split(',').join(' '));
+    if (posCsv && /[1-9]/.test(posCsv)) { localStorage.setItem('buscarHistorialPos', posCsv); } else { localStorage.removeItem('buscarHistorialPos'); }
   } catch (e) { /* si falla localStorage, igual se redirige */ }
   window.location.href = 'buscar.html';
 }
@@ -237,7 +238,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
         + '<td><b>'+n1+'</b></td><td><b>'+n2+'</b></td><td><b>'+n3+'</b></td>'
         + '<td>'+t.posicion1+'</td><td>'+t.posicion2+'</td><td>'+t.posicion3+'</td><td>'+t.total+'</td><td>'+t.fecha+'</td><td>'+t.concurso+'</td>'
         + '<td class="distancia-bold">'+t.distancia+'</td>'
-        + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="seguirCombinacion(\'tercia\',\''+n1+','+n2+','+n3+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\')">🔍 Buscar</button></td>'
+        + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="seguirCombinacion(\'tercia\',\''+n1+','+n2+','+n3+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\',\''+t.posicion1+','+t.posicion2+','+t.posicion3+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
     tbody.innerHTML = html;

@@ -89,7 +89,7 @@
   <div class="buscar-historial-controles">
     <label for="inputBuscarNumeros">Escribe tus números para ver dónde han salido:</label>
     <input type="text" id="inputBuscarNumeros" placeholder="Ej: 01, 05, 07, 15, 20" style="min-width:260px;">
-    <button type="button" class="btn-buscar-historial" onclick="buscarEnHistorial()">🔵 Buscar en todo el historial</button>
+    <button type="button" class="btn-buscar-historial" onclick="POS_BUSCAR=null;buscarEnHistorial()">🔵 Buscar en todo el historial</button>
     <button type="button" class="btn-limpiar-historial" onclick="limpiarBusquedaHistorial()">🗑️ Limpiar</button>
   </div>
   <div style="margin-bottom:14px; font-size:0.85rem;">📥 ¿Prefieres verlo en Excel? <a href="historial.csv" download>Descarga el historial completo aquí</a>.</div>
@@ -123,6 +123,7 @@ async function cargarHistorialJSON() {
   return historialCacheJSON;
 }
 
+var POS_BUSCAR = null;
 async function buscarEnHistorial() {
   const valor = document.getElementById('inputBuscarNumeros').value;
   const numeros = valor.split(/[\s,]+/).map(function(n){ return parseInt(n,10); }).filter(function(n){ return !isNaN(n); });
@@ -140,18 +141,24 @@ async function buscarEnHistorial() {
   }
   resumen.innerHTML = 'Buscando...';
   const historial = await cargarHistorialJSON();
+  const pos = (POS_BUSCAR && POS_BUSCAR.nums.join(',') === numeros.join(',')) ? POS_BUSCAR.pos : null;
   const encontrados = historial.filter(function(s){
-    return numeros.every(function(n){ return s.numeros.indexOf(n) !== -1; });
+    return numeros.every(function(n, i){ return (pos && pos[i] > 0) ? s.numeros[pos[i] - 1] === n : s.numeros.indexOf(n) !== -1; });
   });
   const badges = numeros.map(function(n){ return '<span class="badge-numero-verde">' + n + '</span>'; }).join(' ');
   resumen.innerHTML = 'Se encontraron ' + encontrados.length + ' sorteos con: ' + badges + '';
+  if (pos) {
+    const en = document.documentElement.lang === 'en';
+    resumen.innerHTML += (en ? ' in positions ' : ' en las posiciones ') + pos.join('-') + ' · <a href="#" onclick="POS_BUSCAR=null;buscarEnHistorial();return false;">' + (en ? 'see in any position' : 'ver en cualquier posición') + '</a>';
+  }
   const LIMITE = 500;
   const paraMostrar = encontrados.slice().reverse().slice(0, LIMITE);
   let filas = '';
   paraMostrar.forEach(function(s){
     let celdas = '';
-    s.numeros.forEach(function(n){
-      celdas += '<td>' + (numeros.indexOf(n) !== -1 ? '<span class="badge-numero-verde">' + n + '</span>' : n) + '</td>';
+    s.numeros.forEach(function(n, k){
+      const marcar = pos ? numeros.some(function(m, i){ return m === n && (!(pos[i] > 0) || pos[i] - 1 === k); }) : numeros.indexOf(n) !== -1;
+      celdas += '<td>' + (marcar ? '<span class="badge-numero-verde">' + n + '</span>' : n) + '</td>';
     });
     filas += '<tr><td>' + s.concurso + '</td>' + celdas + '<td>' + s.fecha + '</td></tr>';
   });
@@ -205,6 +212,7 @@ function cerrarGraficaAparicionesBuscar() {
 }
 
 function limpiarBusquedaHistorial() {
+  POS_BUSCAR = null;
   document.getElementById('inputBuscarNumeros').value = '';
   document.getElementById('resumenBusquedaHistorial').innerHTML = '';
   document.getElementById('tablaBusquedaHistorialBody').innerHTML = '';
@@ -215,6 +223,9 @@ function limpiarBusquedaHistorial() {
     const pendientes = localStorage.getItem('buscarHistorialNumeros');
     if (pendientes) {
       localStorage.removeItem('buscarHistorialNumeros');
+      const posPend = localStorage.getItem('buscarHistorialPos');
+      localStorage.removeItem('buscarHistorialPos');
+      if (posPend) { POS_BUSCAR = { nums: pendientes.split(/[\s,]+/).map(Number), pos: posPend.split(',').map(Number) }; }
       document.getElementById('inputBuscarNumeros').value = pendientes;
       buscarEnHistorial();
     }
