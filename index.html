@@ -211,6 +211,80 @@ function toggleUltimosResultados() {
   </section>
   <aside class="aside-right">
   </aside>
+<style>
+.bp-wrap{max-width:900px;margin:2.2rem auto 0;padding:0 1.6rem;color:#1e293b;}
+@media(min-width:1024px){.main-container>.bp-wrap{grid-column:2;width:100%;box-sizing:border-box;}}
+.bp-sec{margin:0 0 2rem;}
+.bp-sec h2{font-size:1.25rem;margin:0 0 .6rem;color:#0f172a;text-align:center;}
+.bp-intro,.bp-nota{font-size:.95rem;line-height:1.55;color:#475569;margin:0 0 .9rem;text-align:center;}
+.bp-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.bp-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.bp-card h3{font-size:1rem;margin:0 0 .5rem;color:#1e293b;}
+.bp-lista{list-style:none;margin:0;padding:0;}
+.bp-lista li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f1f5f9;font-size:.92rem;line-height:1.35;}
+.bp-lista li:last-child{border-bottom:none;}
+.bp-num{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#2563eb;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
+.bp-det{color:#475569;}
+.bp-det small{display:block;color:#64748b;font-size:.8rem;}
+.bp-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:.4rem;justify-content:center;}
+.bp-links a{display:inline-block;padding:8px 14px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-weight:600;font-size:.88rem;text-decoration:none;}
+.bp-faq h3{font-size:1.02rem;margin:1.1rem 0 .3rem;color:#1e293b;}
+.bp-faq h3:first-child{margin-top:0;}
+.bp-faq p{margin:0;font-size:.95rem;line-height:1.6;color:#334155;}
+@media(max-width:640px){.bp-cols{grid-template-columns:1fr;}}
+</style>
+<div class="bp-wrap">
+<section class="bp-sec" id="resumen-estadistico">
+  <h2>Números de Chispazo más atrasados y más frecuentes</h2>
+  <p class="bp-intro">Estadística al concurso 12361 (08/11/2026). Cuenta todos los sorteos del historial, con los dos sorteos del día juntos, igual que la tabla de la pestaña Números.</p>
+  <div class="bp-cols">
+    <div class="bp-card">
+      <h3>⏳ Los 5 que más sorteos llevan sin salir</h3>
+      <ol class="bp-lista">
+        <li><span class="bp-num">28</span><span class="bp-det">17 sorteos sin salir<small>Última vez: 30/10/2026 (concurso 12344)</small></span></li>
+        <li><span class="bp-num">26</span><span class="bp-det">16 sorteos sin salir<small>Última vez: 31/10/2026 (concurso 12345)</small></span></li>
+        <li><span class="bp-num">14</span><span class="bp-det">10 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12351)</small></span></li>
+        <li><span class="bp-num">21</span><span class="bp-det">10 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12351)</small></span></li>
+        <li><span class="bp-num">20</span><span class="bp-det">9 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12352)</small></span></li>
+      </ol>
+    </div>
+    <div class="bp-card">
+      <h3>🔥 Los 5 que más han salido</h3>
+      <ol class="bp-lista">
+        <li><span class="bp-num">27</span><span class="bp-det">2,066 veces en el historial</span></li>
+        <li><span class="bp-num">10</span><span class="bp-det">2,054 veces en el historial</span></li>
+        <li><span class="bp-num">21</span><span class="bp-det">2,005 veces en el historial</span></li>
+        <li><span class="bp-num">23</span><span class="bp-det">1,995 veces en el historial</span></li>
+        <li><span class="bp-num">14</span><span class="bp-det">1,984 veces en el historial</span></li>
+      </ol>
+    </div>
+  </div>
+  <p class="bp-nota" style="margin-top:.9rem;">Son datos históricos de lo que ya ocurrió, no una predicción: cada sorteo es independiente y todos los números tienen la misma probabilidad de salir.</p>
+  <div class="bp-links"><a href="numeros-atrasados.html">⏳ Ver todos los números, pares y tríos atrasados</a><a href="buscar.html">🔍 Busca tus números</a></div>
+</section>
+<section class="bp-sec" id="preguntas-frecuentes">
+  <h2>Preguntas frecuentes sobre Chispazo</h2>
+  <div class="bp-card bp-faq">
+    <h3>¿Qué es Chispazo y cómo se juega?</h3>
+    <p>Chispazo es un juego de la Lotería Nacional de México. Se elige una combinación de 5, 6 o hasta 7 números del 1 al 28 y en cada sorteo se extraen 5 números al azar. Con acertar solo dos de los cinco números sorteados ya se obtiene premio, sin importar el orden en que salgan.</p>
+    <h3>¿A qué hora son los sorteos de Chispazo?</h3>
+    <p>Hay dos sorteos todos los días: Chispazo de las Tres a las 15:00 hrs y Chispazo Clásico a las 21:00 hrs, según la página oficial de la Lotería Nacional. Los resultados de ambos aparecen arriba en esta página.</p>
+    <h3>¿Cómo comprobar mi boleto de Chispazo?</h3>
+    <p>Compara los números de tu boleto con la combinación ganadora del concurso en el que jugaste. En esta página están los dos sorteos más recientes, en Resultados de ayer los del día anterior y en Ver todos los concursos los anteriores. Cuenta cuántos números coinciden: con 5, 4, 3 o 2 aciertos hay premio. Los resultados de este sitio son informativos y sin validez oficial; el premio siempre se confirma con tu boleto en un punto de venta autorizado o con la Lotería Nacional.</p>
+    <h3>¿Cuánto paga Chispazo por 5, 4, 3 y 2 aciertos?</h3>
+    <p>Hay cuatro categorías de premio en cada sorteo. Con 5, 4 y 3 aciertos los montos son variables: dependen de las ventas del sorteo y no existe una bolsa mínima garantizada. Con 2 aciertos el premio es de $10.00, el valor de una combinación sencilla. Según la Lotería Nacional, si no hay ganadores de primer lugar la bolsa se reparte entre los de segundo lugar, y si tampoco los hay pasa a los de tercer lugar.</p>
+    <h3>¿Cuánto tiempo tengo para cobrar un premio de Chispazo?</h3>
+    <p>Tienes 60 días naturales para cobrarlo, contados a partir del día siguiente al sorteo. Para cobrar se entrega el boleto ganador y al pagar se retienen los impuestos que correspondan. Según la Lotería Nacional, los premios de hasta $9,999.99 brutos se cobran en agencias o expendios autorizados; los montos mayores, en los lugares que indica la Lotería Nacional.</p>
+    <h3>¿Cuánto cuesta jugar Chispazo?</h3>
+    <p>Una combinación sencilla de 5 números cuesta $10. Si eliges 6 números juegas 6 combinaciones ($60) y con 7 números son 21 combinaciones ($210).</p>
+    <h3>¿Qué probabilidad hay de ganar en Chispazo?</h3>
+    <p>Existen 98,280 combinaciones posibles de 5 números entre 28. Con una combinación sencilla, la probabilidad de acertar los 5 números es de 1 entre 98,280; de acertar exactamente 4, de 1 entre 855 aproximadamente; de acertar exactamente 3, de 1 entre 39; y de acertar exactamente 2, de 1 entre 5.5. En total, una de cada 4.8 combinaciones obtiene al menos el premio de 2 aciertos (20.7%). Son cálculos matemáticos, no predicciones.</p>
+    <h3>¿Los números atrasados tienen más probabilidad de salir?</h3>
+    <p>No. Cada sorteo es independiente: un número que lleva muchos sorteos sin salir no tiene más ni menos probabilidad que los demás. Las estadísticas de atraso y de frecuencia de este sitio muestran lo que ya ocurrió y sirven como apoyo para organizar tus números, no como predicción ni garantía de premio.</p>
+  </div>
+  <div class="bp-links" style="margin-top:.9rem;"><a href="premios_clasico.html">🏆 Ver los premios del último sorteo</a></div>
+</section>
+</div>
 </main>
 <style>
 .btn-grafica{display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;cursor:pointer;font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap;animation:pulso-grafica 2.2s ease-in-out infinite;}
@@ -609,79 +683,6 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   cargarInicial();
 })();
 </script>
-<style>
-.bp-wrap{max-width:900px;margin:2.2rem auto 0;padding:0 1.6rem;color:#1e293b;}
-.bp-sec{margin:0 0 2rem;}
-.bp-sec h2{font-size:1.25rem;margin:0 0 .6rem;color:#0f172a;text-align:center;}
-.bp-intro,.bp-nota{font-size:.95rem;line-height:1.55;color:#475569;margin:0 0 .9rem;text-align:center;}
-.bp-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.bp-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
-.bp-card h3{font-size:1rem;margin:0 0 .5rem;color:#1e293b;}
-.bp-lista{list-style:none;margin:0;padding:0;}
-.bp-lista li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f1f5f9;font-size:.92rem;line-height:1.35;}
-.bp-lista li:last-child{border-bottom:none;}
-.bp-num{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#2563eb;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.95rem;}
-.bp-det{color:#475569;}
-.bp-det small{display:block;color:#64748b;font-size:.8rem;}
-.bp-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:.4rem;justify-content:center;}
-.bp-links a{display:inline-block;padding:8px 14px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-weight:600;font-size:.88rem;text-decoration:none;}
-.bp-faq h3{font-size:1.02rem;margin:1.1rem 0 .3rem;color:#1e293b;}
-.bp-faq h3:first-child{margin-top:0;}
-.bp-faq p{margin:0;font-size:.95rem;line-height:1.6;color:#334155;}
-@media(max-width:640px){.bp-cols{grid-template-columns:1fr;}}
-</style>
-<div class="bp-wrap">
-<section class="bp-sec" id="resumen-estadistico">
-  <h2>Números de Chispazo más atrasados y más frecuentes</h2>
-  <p class="bp-intro">Estadística al concurso 12361 (08/11/2026). Cuenta todos los sorteos del historial, con los dos sorteos del día juntos, igual que la tabla de la pestaña Números.</p>
-  <div class="bp-cols">
-    <div class="bp-card">
-      <h3>⏳ Los 5 que más sorteos llevan sin salir</h3>
-      <ol class="bp-lista">
-        <li><span class="bp-num">28</span><span class="bp-det">17 sorteos sin salir<small>Última vez: 30/10/2026 (concurso 12344)</small></span></li>
-        <li><span class="bp-num">26</span><span class="bp-det">16 sorteos sin salir<small>Última vez: 31/10/2026 (concurso 12345)</small></span></li>
-        <li><span class="bp-num">14</span><span class="bp-det">10 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12351)</small></span></li>
-        <li><span class="bp-num">21</span><span class="bp-det">10 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12351)</small></span></li>
-        <li><span class="bp-num">20</span><span class="bp-det">9 sorteos sin salir<small>Última vez: 03/11/2026 (concurso 12352)</small></span></li>
-      </ol>
-    </div>
-    <div class="bp-card">
-      <h3>🔥 Los 5 que más han salido</h3>
-      <ol class="bp-lista">
-        <li><span class="bp-num">27</span><span class="bp-det">2,066 veces en el historial</span></li>
-        <li><span class="bp-num">10</span><span class="bp-det">2,054 veces en el historial</span></li>
-        <li><span class="bp-num">21</span><span class="bp-det">2,005 veces en el historial</span></li>
-        <li><span class="bp-num">23</span><span class="bp-det">1,995 veces en el historial</span></li>
-        <li><span class="bp-num">14</span><span class="bp-det">1,984 veces en el historial</span></li>
-      </ol>
-    </div>
-  </div>
-  <p class="bp-nota" style="margin-top:.9rem;">Son datos históricos de lo que ya ocurrió, no una predicción: cada sorteo es independiente y todos los números tienen la misma probabilidad de salir.</p>
-  <div class="bp-links"><a href="numeros-atrasados.html">⏳ Ver todos los números, pares y tríos atrasados</a><a href="buscar.html">🔍 Busca tus números</a></div>
-</section>
-<section class="bp-sec" id="preguntas-frecuentes">
-  <h2>Preguntas frecuentes sobre Chispazo</h2>
-  <div class="bp-card bp-faq">
-    <h3>¿Qué es Chispazo y cómo se juega?</h3>
-    <p>Chispazo es un juego de la Lotería Nacional de México. Se elige una combinación de 5, 6 o hasta 7 números del 1 al 28 y en cada sorteo se extraen 5 números al azar. Con acertar solo dos de los cinco números sorteados ya se obtiene premio, sin importar el orden en que salgan.</p>
-    <h3>¿A qué hora son los sorteos de Chispazo?</h3>
-    <p>Hay dos sorteos todos los días: Chispazo de las Tres a las 15:00 hrs y Chispazo Clásico a las 21:00 hrs, según la página oficial de la Lotería Nacional. Los resultados de ambos aparecen arriba en esta página.</p>
-    <h3>¿Cómo comprobar mi boleto de Chispazo?</h3>
-    <p>Compara los números de tu boleto con la combinación ganadora del concurso en el que jugaste. En esta página están los dos sorteos más recientes, en Resultados de ayer los del día anterior y en Ver todos los concursos los anteriores. Cuenta cuántos números coinciden: con 5, 4, 3 o 2 aciertos hay premio. Los resultados de este sitio son informativos y sin validez oficial; el premio siempre se confirma con tu boleto en un punto de venta autorizado o con la Lotería Nacional.</p>
-    <h3>¿Cuánto paga Chispazo por 5, 4, 3 y 2 aciertos?</h3>
-    <p>Hay cuatro categorías de premio en cada sorteo. Con 5, 4 y 3 aciertos los montos son variables: dependen de las ventas del sorteo y no existe una bolsa mínima garantizada. Con 2 aciertos el premio es de $10.00, el valor de una combinación sencilla. Según la Lotería Nacional, si no hay ganadores de primer lugar la bolsa se reparte entre los de segundo lugar, y si tampoco los hay pasa a los de tercer lugar.</p>
-    <h3>¿Cuánto tiempo tengo para cobrar un premio de Chispazo?</h3>
-    <p>Tienes 60 días naturales para cobrarlo, contados a partir del día siguiente al sorteo. Para cobrar se entrega el boleto ganador y al pagar se retienen los impuestos que correspondan. Según la Lotería Nacional, los premios de hasta $9,999.99 brutos se cobran en agencias o expendios autorizados; los montos mayores, en los lugares que indica la Lotería Nacional.</p>
-    <h3>¿Cuánto cuesta jugar Chispazo?</h3>
-    <p>Una combinación sencilla de 5 números cuesta $10. Si eliges 6 números juegas 6 combinaciones ($60) y con 7 números son 21 combinaciones ($210).</p>
-    <h3>¿Qué probabilidad hay de ganar en Chispazo?</h3>
-    <p>Existen 98,280 combinaciones posibles de 5 números entre 28. Con una combinación sencilla, la probabilidad de acertar los 5 números es de 1 entre 98,280; de acertar exactamente 4, de 1 entre 855 aproximadamente; de acertar exactamente 3, de 1 entre 39; y de acertar exactamente 2, de 1 entre 5.5. En total, una de cada 4.8 combinaciones obtiene al menos el premio de 2 aciertos (20.7%). Son cálculos matemáticos, no predicciones.</p>
-    <h3>¿Los números atrasados tienen más probabilidad de salir?</h3>
-    <p>No. Cada sorteo es independiente: un número que lleva muchos sorteos sin salir no tiene más ni menos probabilidad que los demás. Las estadísticas de atraso y de frecuencia de este sitio muestran lo que ya ocurrió y sirven como apoyo para organizar tus números, no como predicción ni garantía de premio.</p>
-  </div>
-  <div class="bp-links" style="margin-top:.9rem;"><a href="premios_clasico.html">🏆 Ver los premios del último sorteo</a></div>
-</section>
-</div>
 <div style='text-align:center; padding:1.2rem 1rem 0; margin-top:2rem; display:flex; justify-content:center; gap:22px; flex-wrap:wrap;'>
   <a href='resultados-de-ayer.html' style='color:#2563eb; font-weight:600; text-decoration:none;'>🗓️ Resultados de ayer</a>
   <a href='numeros-atrasados.html' style='color:#2563eb; font-weight:600; text-decoration:none;'>⏳ Números, pares y tríos atrasados</a>
