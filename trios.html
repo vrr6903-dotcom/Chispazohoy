@@ -172,8 +172,8 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   const LIMITE_FILAS = 500;
   const EN = (document.documentElement.lang === 'en');
   const TT = EN
-    ? { mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; narrow the filters)', sinRes:'No results. Try lowering Min. Totals or Min. Gap.' }
-    : { mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; afina los filtros)', sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.' };
+    ? { mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; raise Min. Totals, pick a number in the menus or set 0 in the positions to see the overall total)', sinRes:'No results. Try lowering Min. Totals or Min. Gap.' }
+    : { mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; sube Mín. Totales, elige un número en los menús o pon 0 en las posiciones para ver el total general)', sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.' };
   const IDS = ['selTerN1','selTerN2','selTerN3','selTerP1','selTerP2','selTerP3'];
   let datos = [];
   function el(id){ return document.getElementById(id); }

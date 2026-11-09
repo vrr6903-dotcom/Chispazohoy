@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TZTrh5zrupJ4kjF8qSpYQDW1JS8f9c_p7C4UO2Pzcwk">
 <title>Resultados Chispazo de las tres y Clásico hoy #12362</title>
-<meta name="description" content="Resultados del Chispazo de las tres y Clásico de hoy, domingo 8 de noviembre de 2026: números ganadores, premios y estadísticas interactivas de atraso, pares y tríos. Información sin validez oficial.">
+<meta name="description" content="Resultados del Chispazo de las tres y Clásico de hoy, lunes 9 de noviembre de 2026: números ganadores, premios y estadísticas interactivas de atraso, pares y tríos. Información sin validez oficial.">
 <link rel="canonical" href="https://www.resultadoschispazohoy.com/">
 <link rel="stylesheet" href="estilos.css">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -41,37 +41,39 @@
   <div id="contenidoUltimosResultados">
     <div class="section-header">
       <h1 class="section-title">Resultados Chispazo de las tres y Clásico de hoy</h1>
-      <span class="fecha-badge">📅 08/11/2026</span>
+      <span class="fecha-badge">📅 09/11/2026</span>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-clasico">Clásico</span>
-        <a href="concurso-12362.html" style="text-decoration:none;">        <span class="concurso-num">#12362</span></a>
+        <a href="concurso-12362.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12362</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">10</div>
           <div class="esfera-sm">13</div>
           <div class="esfera-sm">16</div>
           <div class="esfera-sm">17</div>
           <div class="esfera-sm">22</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">08/11/2026</span>
       </div>
       <a class="btn-premios" href="premios_clasico.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
     <div class="sorteo-card-compact">
       <div class="sorteo-info">
         <span class="badge-tipo badge-tres">De las tres</span>
-        <a href="concurso-12361.html" style="text-decoration:none;">        <span class="concurso-num">#12361</span></a>
+        <a href="concurso-12361.html" style="text-decoration:none;">        <span class="concurso-num" style="color:#94a3b8;">#12361</span></a>
       </div>
       <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-        <div class="esferas-container">
+        <div class="esferas-container" style="opacity:0.45;">
           <div class="esfera-sm">02</div>
           <div class="esfera-sm">03</div>
           <div class="esfera-sm">12</div>
           <div class="esfera-sm">15</div>
           <div class="esfera-sm">17</div>
         </div>
+        <span style="font-size:0.8rem; font-weight:600; color:#64748b;">08/11/2026</span>
       </div>
       <a class="btn-premios" href="premios_tres.html" style="display:inline-block; margin-top:8px; padding:6px 14px; background:#ede9fe; color:#7c3aed; font-weight:600; font-size:0.85rem; border-radius:999px; text-decoration:none;">Premios &gt;</a>
     </div>
@@ -465,10 +467,10 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   const EN_PARES = document.documentElement.lang === 'en';
   const TP = EN_PARES
     ? { ver:'Show:', totales:'Totals', detalle:'By position', todos:'All',
-        mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; narrow the filters)',
+        mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; raise Min. Totals, pick a number in the menus or set 0 in the positions to see the overall total)',
         sinRes:'No results. Try lowering Min. Totals or Min. Gap.', ninguna:'Check Totals or By position to see rows.' }
     : { ver:'Ver:', totales:'Totales', detalle:'Detalle', todos:'Todos',
-        mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; afina los filtros)',
+        mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; sube Mín. Totales, elige un número en los menús o pon 0 en las posiciones para ver el total general)',
         sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.', ninguna:'Marca Totales o Detalle para ver filas.' };
 
   let paresGeneral = [];        // pares.json: filas generales (posiciones 0 y 0)
