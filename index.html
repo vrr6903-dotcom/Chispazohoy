@@ -203,15 +203,10 @@ function toggleUltimosResultados() {
         </table></div></div>
     <div class="stats-card">
       <div class="stats-title" id="tituloPares"><span>🔗 Combinaciones de dos números: Frecuencia > 35</span></div>
-      <div class="filter-bar">
-        <label for="minTotalesPares">Mín. Totales:</label><input type="number" id="minTotalesPares" value="35">
-        <label for="minDistanciaPares">Mín. Atraso:</label><input type="number" id="minDistanciaPares" value="0">
-        <button class="btn-aplicar" onclick="renderPares()">Buscar</button>
-      </div>
       <div class="pares-estado" id="estadoPares"></div>
       <div class="table-scroll-container">
         <table class="table-stats" id="tablaPares">
-          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th>Concurso</th><th>Fecha</th><th>Total</th><th>Atraso</th><th>Acciones</th></tr></thead>
+          <thead><tr><th class="th-filtro"><div class="sel-enc"><select id="selParesN1" data-etq="N1" title="N1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesN2" data-etq="N2" title="N2"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP1" data-etq="P1" title="P1"></select></div></th><th class="th-filtro"><div class="sel-enc"><select id="selParesP2" data-etq="P2" title="P2"></select></div></th><th class="th-min"><div class="min-enc"><span>Total</span><input type="number" min="0" id="minTotalesPares" value="35" title="Mín. Totales" aria-label="Mín. Totales"></div></th><th class="th-min"><div class="min-enc"><span>Atraso</span><input type="number" min="0" id="minDistanciaPares" value="0" title="Mín. Atraso" aria-label="Mín. Atraso"></div></th><th>Fecha</th><th>Concurso</th><th>Acciones</th></tr></thead>
           <tbody id="tbodyPares"></tbody>
         </table></div></div>
 </div>
@@ -309,8 +304,12 @@ a.bp-num{text-decoration:none;}
 .sel-enc select:disabled{opacity:0.55;cursor:not-allowed;}
 .sel-enc select option{color:#1e293b;background:#fff;font-weight:400;}
 .sel-enc::after{content:'▾';position:absolute;right:5px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:#fff;}
-@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;min-width:34px;}#tablaPares th:nth-child(6),#tablaPares td:nth-child(6),#tablaTercias th:nth-child(8),#tablaTercias td:nth-child(8){display:none;}}
+@media (max-width:600px){.sel-enc select{font-size:0.78rem;padding:5px 11px 5px 1px;}.sel-enc::after{right:2px;font-size:8px;}.th-filtro{padding:4px 1px !important;min-width:34px;}#tablaPares th:nth-child(7),#tablaPares td:nth-child(7),#tablaTercias th:nth-child(9),#tablaTercias td:nth-child(9){display:none;}.min-enc input{width:46px;}}
 .pares-estado{font-size:0.8rem;color:#64748b;margin:6px 0;min-height:1.1em;}
+#estadoPares:empty,#estadoTercias:empty{display:none;}
+.th-min{padding:4px 4px !important;}
+.min-enc{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.min-enc input{width:56px;padding:2px 4px;font-size:0.8rem;font-weight:600;text-align:center;color:#1e293b;background:#fff;border:1px solid #cbd5e1;border-radius:4px;}
 </style>
 <script>
 function buscarSeleccionHistorial(numerosCsv, posCsv){
@@ -442,8 +441,8 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
       const p2 = String(p.par02).padStart(2,'0');
       html += '<tr class="clickable-row" onclick="filtrarPorPar(\''+p1+'\', \''+p2+'\')" title="Filtrar por el par \' + p1 + \' y \' + p2 + \'" data-total="'+p.total+'" data-distancia="'+p.distancia+'">'
         + '<td><b>'+p1+'</b></td><td><b>'+p2+'</b></td>'
-        + '<td>'+p.posicion1+'</td><td>'+p.posicion2+'</td><td>'+p.concurso+'</td><td>'+p.fecha+'</td><td>'+p.total+'</td>'
-        + '<td class="distancia-bold">'+p.distancia+'</td>'
+        + '<td>'+p.posicion1+'</td><td>'+p.posicion2+'</td><td>'+p.total+'</td>'
+        + '<td class="distancia-bold">'+p.distancia+'</td><td>'+p.fecha+'</td><td>'+p.concurso+'</td>'
         + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="event.stopPropagation(); seguirCombinacion(\'par\',\''+p1+','+p2+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar el par \' + p1 + \' y \' + p2 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+p1+','+p2+'\',\''+p.posicion1+','+p.posicion2+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
@@ -460,8 +459,8 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
       const n3 = String(t.n3).padStart(2,'0');
       html += '<tr class="clickable-row" onclick="filtrarPorTercia(\''+n1+'\', \''+n2+'\', \''+n3+'\')" title="Filtrar por la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \'" data-total="'+t.total+'" data-distancia="'+t.distancia+'">'
         + '<td><b>'+n1+'</b></td><td><b>'+n2+'</b></td><td><b>'+n3+'</b></td>'
-        + '<td>'+t.posicion1+'</td><td>'+t.posicion2+'</td><td>'+t.posicion3+'</td><td>'+t.total+'</td><td>'+t.fecha+'</td><td>'+t.concurso+'</td>'
-        + '<td class="distancia-bold">'+t.distancia+'</td>'
+        + '<td>'+t.posicion1+'</td><td>'+t.posicion2+'</td><td>'+t.posicion3+'</td><td>'+t.total+'</td>'
+        + '<td class="distancia-bold">'+t.distancia+'</td><td>'+t.fecha+'</td><td>'+t.concurso+'</td>'
         + '<td style="white-space:nowrap"><button class="btn-grafica btn-seguir" title="'+TSEG.tip+'" onclick="event.stopPropagation(); seguirCombinacion(\'tercia\',\''+n1+','+n2+','+n3+'\', this)">'+TSEG.guardar+'</button> <button class="btn-grafica" title="Buscar la tercia \' + n1 + \', \' + n2 + \' y \' + n3 + \' en todo el historial" onclick="event.stopPropagation(); buscarSeleccionHistorial(\''+n1+','+n2+','+n3+'\',\''+t.posicion1+','+t.posicion2+','+t.posicion3+'\')">🔍 Buscar</button></td>'
         + '</tr>';
     });
@@ -475,10 +474,10 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
   const TP = EN_PARES
     ? { ver:'Show:', totales:'Totals', detalle:'By position', todos:'All',
         mostrando:'Showing {a} of {b}', recorte:'(first {n} shown; raise Min. Totals, pick a number in the menus or set 0 in the positions to see the overall total)',
-        sinRes:'No results. Try lowering Min. Totals or Min. Gap.', ninguna:'Check Totals or By position to see rows.' }
+        sinRes:'No results for the selected filters.', ninguna:'Check Totals or By position to see rows.' }
     : { ver:'Ver:', totales:'Totales', detalle:'Detalle', todos:'Todos',
         mostrando:'Mostrando {a} de {b}', recorte:'(se muestran las primeras {n}; sube Mín. Totales, elige un número en los menús o pon 0 en las posiciones para ver el total general)',
-        sinRes:'Sin resultados. Prueba bajando Mín. Totales o Mín. Atraso.', ninguna:'Marca Totales o Detalle para ver filas.' };
+        sinRes:'Sin resultados con los filtros elegidos.', ninguna:'Marca Totales o Detalle para ver filas.' };
 
   let paresGeneral = [];        // pares.json: filas generales (posiciones 0 y 0)
   let paresDetalle = [];        // pares_detalle.json: filas por posición (se carga solo con la casilla Detalle)
@@ -549,9 +548,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     } else if (!filtradas.length) {
       estado.textContent = TP.sinRes;
     } else {
-      let txt = TP.mostrando.replace('{a}', mostrar.length).replace('{b}', filtradas.length);
-      if (filtradas.length > mostrar.length) txt += ' ' + TP.recorte.replace('{n}', LIMITE_FILAS_PARES);
-      estado.textContent = txt;
+      estado.textContent = '';   // sin la línea "Mostrando a de b": ya no hay filtros de mínimos que sugerir
     }
   }
   window.renderPares = renderPares;
@@ -594,7 +591,7 @@ function limpiarFiltrosCruzados(){document.getElementById('tituloPares').innerHT
     });
     ['minTotalesPares', 'minDistanciaPares'].forEach(id => {
       const i = elp(id);
-      if (i) i.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') renderPares(); });
+      if (i) { i.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') renderPares(); }); i.addEventListener('change', renderPares); }
     });
   }
 
