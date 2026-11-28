@@ -526,7 +526,7 @@ var CFG = {
     h += '<div id="anTablaSorteos">' + tabla(cab, '') + '</div>';
     h += '<p class="an-ver"><button type="button" class="nn-btn" id="anMas"></button></p>';
     h += anuncio();
-    // numeros que mas acompanan
+    // numeros que mas acompanan (se calculan aqui, pero se pintan al final: orden = sorteos juntos, matriz por posicion, anios, acompanantes)
     var ac = acompanantes(S, r);
     var total5 = r.idx.length;
     ac.sort(function (a, b) { return (b.total - a.total) || (a.dist - b.dist) || (a.num - b.num); });
@@ -540,10 +540,11 @@ var CFG = {
         (t === k ? '<td>' + pct1(100 * (K - k) / (N - k)) + '</td>' : '') +
         '<td>' + celdaConc(p.conc) + '<br><small>' + esc(p.fecha) + '</small></td></tr>';
     }
-    if (fa) h += '<h2>' + esc(T.h2Acomp) + '</h2><p class="nn-texto">' + esc(T.pAcomp) + '</p>' + tabla(cabA, fa);
+    var htmlAcomp = fa ? '<h2>' + esc(T.h2Acomp) + '</h2><p class="nn-texto">' + esc(T.pAcomp) + '</p>' + tabla(cabA, fa) : '';
     var pp = posiciones(r, S);
-    h += anuncio() + pp + (pp ? anuncio() : '');
+    h += pp + (pp ? anuncio() : '');
     h += tablaAnios(r, T.h2AnioVarios);
+    h += htmlAcomp;
     elRes.innerHTML = h;
     masSorteos();
   }
